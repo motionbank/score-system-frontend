@@ -11,6 +11,7 @@
 #grid-view {
 
 	position: relative; /* to be able to place inner objects absolutely */ 
+	/* TODO: unhack this to show full content */
 	overflow: hidden; /* remove scrollbar at right when bottom bar is visible */
 
 	width: 100%;

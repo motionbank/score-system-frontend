@@ -267,8 +267,6 @@ var GridView = module.exports = Backbone.View.extend({
 		gridXVisible = parseInt( w / cw );
 		gridYVisible = currentSet.grid_rows;
 
-		console.log( gridXVisible, gridYVisible );
-
 		if ( w - (gridXVisible * cw) > cw / 2 ) {
 			gridXVisible++;
 		}
