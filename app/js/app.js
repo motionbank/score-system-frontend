@@ -17,7 +17,7 @@ var App = module.exports = (function(){
 	var appState = null;
 	var appStarted = false;
 
-	var router = null, slider = null, gridView = null;
+	var router = null, gridView = null;
 
 	var pm = null, pmCache = null;
 
@@ -141,12 +141,6 @@ var App = module.exports = (function(){
 
 		gridView = new (require('js/views/set-view'))( {}, app );
 
-		slider = new (require('js/slider'))( app );
-
-		slider.on('all',function(){
-			app.trigger.apply(app,arguments);
-		});
-
 		var startApp = function ( next ) {
 
 			if ( appStarted ) return;
@@ -206,7 +200,6 @@ var App = module.exports = (function(){
 		});
 
 		router.on('route:selectset',function(set){
-			slider.hide();
 		});
 
 		var apiRetrys = 0;
@@ -243,9 +236,6 @@ var App = module.exports = (function(){
 		appState = new (require('js/models/appstate'))({id:1});
 	}
 	App.prototype = {
-		getSlider : function () {
-			return slider;
-		},
 		getPostMessenger : function () {
 			return messenger;
 		},

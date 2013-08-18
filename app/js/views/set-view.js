@@ -309,13 +309,10 @@ var GridView = module.exports = Backbone.View.extend({
 
 		if ( currentSet.grid_cols <= gridXVisible ) {
 
-			app.getSlider().hide();
-
 		} else {
 
-			app.getSlider().setSize( gridXVisible / (currentSet.grid_cols * 1.0) );
-			app.getSlider().setPosition( lastRatio, false );
-			app.getSlider().show();
+			// TODO: scroll window into view!
+
 		}
 	},
 
@@ -328,7 +325,7 @@ var GridView = module.exports = Backbone.View.extend({
 
 		this.$elParent.show();
 		if ( cellData.cells && cellData.cells.length > (gridXVisible * gridYVisible) ) { // if returning to same as before
-			app.getSlider().show();
+			// TODO: still needed?
 		}
 		this.setPosition(0);
 	},
@@ -362,10 +359,13 @@ var GridView = module.exports = Backbone.View.extend({
 
 				var cellDim = cell.cell.get('extra');
 				var r = (cellDim.x + cellDim.width / 2.0 - gridXVisible / 2.0) / (currentSet.grid_cols - gridXVisible); // TODO: something is wrong here
+				
 				if ( r < 0 ) r = 0;
 				if ( r > 1 ) r = 1;
-				app.getSlider().setPosition( r, false );
-				this.setPosition( r );
+				
+				// TODO: scroll window into view?
+				// app.getSlider().setPosition( r, false );
+				// this.setPosition( r );
 
 				if ( true /* app.getConfig().islocal */ ) {
 					autoPlayTid = setTimeout(function(){
