@@ -9,7 +9,7 @@ jQuery(function(){
 	var formats = [
 		{ ext: 'mp4',   type: 'video/mp4'   },
 		{ ext: 'ogv',   type: 'video/ogg'   },
-		{ ext: 'webm',  type: 'video/webm'  },
+		// { ext: 'webm',  type: 'video/webm'  },
 		{ ext: 'flash', type: 'video/flash' },
 	];
 	
