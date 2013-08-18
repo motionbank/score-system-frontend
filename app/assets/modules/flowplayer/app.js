@@ -57,7 +57,7 @@ jQuery(function(){
 			});
 
 			fPlayer.bind('error',function(evt,fp,err){
-				console.log(fp.video.src);
+				//console.log(fp.video.src);
 			});
 
 			fPlayer.bind('progress',function(evt){
@@ -116,7 +116,7 @@ jQuery(function(){
 			var dw = $doc.width();
 			var dh = $doc.height();
 
-			console.log(vw,vh,dw,dh);
+			//console.log(vw,vh,dw,dh);
 
 			var vr = vw/vh;
 			var dr = dw/dh;
@@ -135,7 +135,7 @@ jQuery(function(){
 				width: vw + 'px',
 				height: vh + 'px'
 			};
-			console.log(css_settings);
+			//console.log(css_settings);
 			$videoContainer.css(css_settings);
 		}
 
