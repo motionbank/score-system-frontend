@@ -7,10 +7,10 @@ jQuery(function(){
 	var parentWindow = null, parentWindowOrigin = '';
 	
 	var formats = [
-		{ext: '.mp4',  type: 'video/mp4'},
-		{ext: '.ogv',  type: 'video/ogg'},
-		{ext: '.webm', type: 'video/webm'},
-		{ext: 'flash', type: 'video/flash'},
+		{ ext: 'mp4',   type: 'video/mp4'   },
+		{ ext: 'ogv',   type: 'video/ogg'   },
+		{ ext: 'webm',  type: 'video/webm'  },
+		{ ext: 'flash', type: 'video/flash' },
 	];
 	
 	var sceneEvents = [];
@@ -51,9 +51,13 @@ jQuery(function(){
 			fPlayer = fp; // store it in function context
 
 			fPlayer.bind('ready',function(){
-				setPlayerSize();
 				fPlayer.pause();
 				api.loadVideo( videoId, videoLoaded );
+				setPlayerSize();
+			});
+
+			fPlayer.bind('error',function(evt,fp,err){
+				console.log(fp.video.src);
 			});
 
 			fPlayer.bind('progress',function(evt){
@@ -81,11 +85,15 @@ jQuery(function(){
 		var video_format_urls = [];
 
 		for ( var i = 0; i < formats.length; i++ ) {
+			var frmt = {};
 			if ( formats[i].ext !== 'flash' ) {
-				video_format_urls.push( 'http://'+config.cloudFront.fileHost+config.pieceMaker.basePath+'/'+videoFileName+formats[i].ext );
-			} else if ( !config.islocal ) {
-				video_format_urls.push( 'mp4:'+(config.pieceMaker.basePath.replace(/^\//,''))+'/'+videoFileName );
+				frmt[formats[i].ext] = 
+					'http://'+config.cloudFront.fileHost+config.pieceMaker.basePath+'/'+videoFileName+'.'+formats[i].ext;
+			} else /*if ( !config.islocal )*/ {
+				frmt[formats[i].ext] = 
+					'mp4:'+(config.pieceMaker.basePath.replace(/^\//,''))+'/'+videoFileName;
 			}
+			video_format_urls.push(frmt);
 		}
 
 		var $videoContainer = jQuery('#video-container').flowplayer({
@@ -103,9 +111,13 @@ jQuery(function(){
 
 			var vw = fPlayer.video.width;
 			var vh = fPlayer.video.height;
+
 			var $doc = jQuery(document.body);
 			var dw = $doc.width();
 			var dh = $doc.height();
+
+			console.log(vw,vh,dw,dh);
+
 			var vr = vw/vh;
 			var dr = dw/dh;
 			if ( dr >= vr ) {
@@ -115,16 +127,17 @@ jQuery(function(){
 				vh = parseInt( Math.round( dw / vr ) );
 				vw = dw;
 			}
-			jQuery('#video-container').css({
+			
+			var css_settings = {
 				left: ((dw-vw) / 2) + 'px',
 					//top: ((dh-vh) / 2) + 'px',
 				top: '0px',
 				width: vw + 'px',
 				height: vh + 'px'
-			});
+			};
+			console.log(css_settings);
+			$videoContainer.css(css_settings);
 		}
-
-		setPlayerSize();
 
 		var videoLoaded = function ( video ) {
 			
