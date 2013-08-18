@@ -34,9 +34,9 @@ var GridView = module.exports = Backbone.View.extend({
 
 		this.$elParent = this.$el.parent();
 		
-		app.on( 'change:slider', function bbChangeSliderCB (val) {
-			this.setPosition( val );
-		}, this);
+		// app.on( 'change:slider', function bbChangeSliderCB (val) {
+		// 	this.setPosition( val );
+		// }, this);
 
 		app.on( 'route:changeset', function bbRouteChangeSetCB (nextSetName){
 			this.loadSet(nextSetName);
@@ -87,9 +87,7 @@ var GridView = module.exports = Backbone.View.extend({
 		});
 
 		this.$el.parent().scroll(function(){
-			var $p = self.$el.parent();
-			var v = $p.scrollLeft() / (self.$el.width()-$p.width());
-			app.trigger( 'change:slider', v );
+			self.setPosition( self.getPosition() );
 		});
 	},
 
@@ -178,16 +176,7 @@ var GridView = module.exports = Backbone.View.extend({
 
 		this.$el.append( renderedCells );
 
-		this.updateVisibleCells();
-	},
-
-	setPosition : function ( ratio ) {
-
-		if ( !cellData || !currentSet ) return;
-
-		lastRatio = ratio;
-
-		this.updateVisibleCells();
+		this.setPosition( 0 );
 	},
 
 	updateVisibleCells : function () {
@@ -305,6 +294,24 @@ var GridView = module.exports = Backbone.View.extend({
 		this.checkSlider();
 	},
 
+	setPosition : function ( ratio ) {
+
+		if ( !cellData || !currentSet ) return;
+
+		lastRatio = ratio;
+
+		var $p = this.$el.parent();
+		$p.scrollLeft( ratio * (this.$el.width() - $p.width()) );
+
+		this.updateVisibleCells();
+	},
+
+	getPosition : function () {
+		var $p = this.$el.parent();
+		var v = $p.scrollLeft() / (this.$el.width()-$p.width());
+		return v;
+	},
+
 	checkSlider : function () {
 
 		if ( currentSet.grid_cols <= gridXVisible ) {
@@ -365,7 +372,7 @@ var GridView = module.exports = Backbone.View.extend({
 				
 				// TODO: scroll window into view?
 				// app.getSlider().setPosition( r, false );
-				// this.setPosition( r );
+				this.setPosition( r );
 
 				if ( true /* app.getConfig().islocal */ ) {
 					autoPlayTid = setTimeout(function(){
