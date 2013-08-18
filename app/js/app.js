@@ -11,7 +11,7 @@ var App = module.exports = (function(){
 	 L + + + + + + + + + + + + + + + + + + + + + + + + + + */
 
 	 // /(localhost|.+\.local)/.test(window.location.host)
-	var config = require('js/config/config');
+	var config = require('config/config');
 
 	var app = null;
 	var appState = null;
