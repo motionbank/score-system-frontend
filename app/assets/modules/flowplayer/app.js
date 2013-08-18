@@ -7,9 +7,9 @@ jQuery(function(){
 	var parentWindow = null, parentWindowOrigin = '';
 	
 	var formats = [
-		{ext: '.mp4', type: 'video/mp4'},
-		{ext: '.ogv', type: 'video/ogg'},
-		//{ext: '.webm', type: 'video/webm'}
+		{ext: '.mp4',  type: 'video/mp4'},
+		{ext: '.ogv',  type: 'video/ogg'},
+		{ext: '.webm', type: 'video/webm'}
 		{ext: 'flash', type: 'video/flash'},
 	];
 	
@@ -38,36 +38,9 @@ jQuery(function(){
 	var initFully = function () {
 
 		messenger.on('set-scene',function(req,resp){
-			console.log( 'received: set-scene' );
+			//console.log( 'received: set-scene' );
 			setToScene( req.data );
 		});
-
-		var $videoContainer = jQuery('#video-container');
-		$videoContainer.html('');
-
-		var $videoPlayer = jQuery('<video class="flowplayer" id="video-player" />');
-
-		for ( var i = 0; i < formats.length; i++ ) {
-			if ( formats[i].ext !== 'flash' ) {
-				$videoPlayer.append( '<source src="http://'+config.cloudFront.fileHost+
-										config.pieceMaker.basePath+'/'+videoFileName+formats[i].ext+'" '+
-										'type="'+formats[i].type+'">' );
-			} else if ( !config.islocal ) {
-				$videoPlayer.append( '<source src="mp4:'+(config.pieceMaker.basePath.replace(/^\//,''))+'/'+videoFileName+'" '+
-										'type="'+formats[i].type+'">' );
-			}
-		}
-
-		$videoContainer.append( $videoPlayer );
-
-		var opts = {
-	  		swf: "flowplayer-5.4.3/flowplayer.swf",
-	  		engine: 'flash'
-		};
-		if ( !config.islocal ) {
-			opts['rtmp'] = "rtmp://"+config.cloudFront.streamer+"/cfx/st";
-		}
-		//console.log( opts );
 
 		var fPlayer = null;
 
@@ -105,10 +78,24 @@ jQuery(function(){
 			});
 		});
 
-		var $videoContainer = jQuery('#video-container').flowplayer(opts);
+		var video_format_urls = [];
+
+		for ( var i = 0; i < formats.length; i++ ) {
+			if ( formats[i].ext !== 'flash' ) {
+				video_format_urls.push( 'http://'+config.cloudFront.fileHost+config.pieceMaker.basePath+'/'+videoFileName+formats[i].ext );
+			} else if ( !config.islocal ) {
+				video_format_urls.push( 'mp4:'+(config.pieceMaker.basePath.replace(/^\//,''))+'/'+videoFileName );
+			}
+		}
+
+		var $videoContainer = jQuery('#video-container').flowplayer({
+			playlist: [ video_format_urls ],
+			engine: 'flash',
+			swf: 'flowplayer-5.4.3/flowplayer.swf',
+			rtmp: 'rtmp://'+config.cloudFront.streamer+'/cfx/st'
+		});
 
 		jQuery(window).resize(function(){
-
 			setPlayerSize();
 		});
 
