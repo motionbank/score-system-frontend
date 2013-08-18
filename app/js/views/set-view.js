@@ -85,6 +85,12 @@ var GridView = module.exports = Backbone.View.extend({
 				$link.attr('href','#set/sets');
 			}
 		});
+
+		this.$el.parent().scroll(function(){
+			var $p = self.$el.parent();
+			var v = $p.scrollLeft() / (self.$el.width()-$p.width());
+			app.trigger( 'change:slider', v );
+		});
 	},
 
 	loadSet : function ( setUrl ) {
@@ -188,13 +194,15 @@ var GridView = module.exports = Backbone.View.extend({
 
 		if ( !cellData || !currentSet ) return;
 
-		var w = this.$el.width();
-		var h = this.$el.height();
+		var w = this.$el.parent().width();
+		var h = this.$el.parent().height();
 
 		var gridWidth = currentSet.grid_cols;
 		var xFrom = Math.round( lastRatio * (gridWidth - gridXVisible) );
-		var cw = 100.0/gridXVisible;
+
+		var cw = 100.0/gridWidth;
 		var ch = 100.0/gridYVisible;
+
 		var absCw = (1.0*w)/gridXVisible,
 			absCh = (1.0*h)/gridYVisible;
 
@@ -205,17 +213,16 @@ var GridView = module.exports = Backbone.View.extend({
 			cv.$el.removeClass('lastcol').removeClass('lastrow');
 
 			// ... not too far left or right
-			if ( !( (cellDim.x + (cellDim.width-1)) < xFrom ||
-					 cellDim.x > xFrom+gridXVisible ) 
+			if ( !( (cellDim.x + (cellDim.width-1)) < xFrom - 1 ||
+					 cellDim.x > xFrom + gridXVisible + 1 ) 
 				) {
 				
-				var left  = cw * (cellDim.x - xFrom);
-				var width = cw *  cellDim.width;
+				var left  = cw * cellDim.x;
+				var width = cw * cellDim.width;
 
 				// show, set position and size in % to make responsive
 				cv.show();
 				cv.$el.css({
-					position: 'absolute',
 					left: 	left+'%',
 					top: 	(ch*cellDim.y)+'%',
 					width: 	width+'%',
@@ -251,8 +258,8 @@ var GridView = module.exports = Backbone.View.extend({
 
 		if ( !currentSet ) return;
 
-		var w = this.$el.width();
-		var h = this.$el.height();
+		var w = this.$el.parent().width();
+		var h = this.$el.parent().height();
 		
 		var ch = parseInt( Math.floor( h / currentSet.grid_rows ) );
 		var cw = (currentSet.cell_width / currentSet.cell_height) * ch;
@@ -260,36 +267,42 @@ var GridView = module.exports = Backbone.View.extend({
 		gridXVisible = parseInt( w / cw );
 		gridYVisible = currentSet.grid_rows;
 
+		console.log( gridXVisible, gridYVisible );
+
 		if ( w - (gridXVisible * cw) > cw / 2 ) {
 			gridXVisible++;
 		}
 		cw = parseInt( Math.floor( w / gridXVisible ) );
 
+		this.$el.css({
+			width: parseInt( cw * currentSet.grid_cols ) + 'px'
+		});
+
 		cellWidth = cw;
 		cellHeight = ch;
 
-		$backgroundGrid.empty();
-		var rows = [];
-		for ( var iy = 0; iy < gridYVisible; iy++ ) {
-			var cols = [];
-			for ( var ix = 0; ix < gridXVisible; ix++ ) {
-				var col = jQuery('<td></td>');
-				col.css({
-					width: (100.0/gridXVisible)+'%'
-				});
-				if ( ix == gridXVisible-1 ) {
-					col.addClass('lastcol');
-				}
-				cols.push(col);
-			}
-			var row = jQuery('<tr></tr>');
-			if ( iy == gridYVisible-1 ) {
-				row.addClass('lastrow');
-			}
-			row.append(cols);
-			rows.push( row );
-		}
-		$backgroundGrid.append(rows);
+		// $backgroundGrid.empty();
+		// var rows = [];
+		// for ( var iy = 0; iy < gridYVisible; iy++ ) {
+		// 	var cols = [];
+		// 	for ( var ix = 0; ix < gridXVisible; ix++ ) {
+		// 		var col = jQuery('<td></td>');
+		// 		col.css({
+		// 			width: (100.0/gridXVisible)+'%'
+		// 		});
+		// 		if ( ix == gridXVisible-1 ) {
+		// 			col.addClass('lastcol');
+		// 		}
+		// 		cols.push(col);
+		// 	}
+		// 	var row = jQuery('<tr></tr>');
+		// 	if ( iy == gridYVisible-1 ) {
+		// 		row.addClass('lastrow');
+		// 	}
+		// 	row.append(cols);
+		// 	rows.push( row );
+		// }
+		// $backgroundGrid.append(rows);
 
 		this.checkSlider();
 	},
