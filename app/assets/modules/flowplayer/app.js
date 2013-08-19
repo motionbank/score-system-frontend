@@ -9,15 +9,16 @@ jQuery(function(){
 	var formats = [
 		{ ext: 'mp4',   type: 'video/mp4'   },
 		{ ext: 'ogv',   type: 'video/ogg'   },
-		// { ext: 'webm',  type: 'video/webm'  },
+		{ ext: 'webm',  type: 'video/webm'  },
 		{ ext: 'flash', type: 'video/flash' },
 	];
 	
 	var sceneEvents = [];
 	var currentScene = null, currentVideo = null;
 
-	var videoFileName = window.location.search.split('v=')[1].split('&')[0];
-	var videoId 	  = window.location.search.split('id=')[1].split('&')[0];
+	var locSearch 	  = window.location.search;
+	var videoFileName = locSearch.split('v=')[1].split('&')[0];
+	var videoId 	  = locSearch.split('id=')[1].split('&')[0];
 
 	var messenger = new PostMessenger(window);
 
@@ -180,5 +181,5 @@ jQuery(function(){
 				fPlayer.pause();
 			}
 		}
-	};
+	}; // initFully
 });
