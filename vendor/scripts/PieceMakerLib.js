@@ -34,8 +34,12 @@ var PieceMakerApi = (function(){
 			 && 'piecemakerError' in context 
 			 && typeof context['piecemakerError'] == 'function' )
 			context['piecemakerError']( resp );
-		else
+		else {
+			if ( 'console' in window && console.log ) {
+				console.log( arguments );
+			}
 			throw( resp );
+		}
     }
 
 	/*
@@ -162,9 +166,13 @@ var PieceMakerApi = (function(){
 			connector.requests[response.requestId].success( response.data );
 			delete connector.requests[response.requestId];
 		} else {
-			console.log( 'Unable to find request with ID: '+response.requestId );
-			console.log( response );
-			console.log( connector.requests );
+			if ( 'console' in window && console.log ) {
+				console.log( 'Unable to find request with ID: '+response.requestId );
+				console.log( response );
+				console.log( connector.requests );
+			} else {
+
+			}
 		}
 	}
 
