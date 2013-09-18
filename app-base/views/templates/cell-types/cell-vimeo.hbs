@@ -1,0 +1,16 @@
+<div class="info">
+	<h1 class="title">{{{title}}}</h1>
+	<div class="description">{{description}}</div>
+</div>
+<div class="content element-hidden">
+<!--
+https://developer.vimeo.com/player/embedding#universal-parameters
+-->
+	<iframe src="http://player.vimeo.com/video/{{vimeo-id}}{{#if vimeo-params}}?
+				{{#each vimeo-params}}{{this}}{{/each}}
+			{{/if}}" 
+		    width="{{vimeo-width}}" height="{{vimeo-height}}" 
+		    frameborder="0" 
+		    webkitAllowFullScreen mozallowfullscreen allowFullScreen
+		    {{#each iframe-attrs}}{{this}} {{/each}} ></iframe>
+</div>

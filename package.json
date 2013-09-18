@@ -1,9 +1,9 @@
 {
-  "author": "Florian Jenett",
-  "name": "motionbank-score-deborah-hay-nttf",
-  "description": "This is the online score for the piece 'No Time To Fly' by choreographer Deborah Hay",
-  "version": "0.0.0",
-  "homepage": "http://motionbank.org/",
+  "author": "Your Name",
+  "name": "package-name",
+  "description": "Package description",
+  "version": "0.0.1",
+  "homepage": "",
   "repository": {
     "type": "git",
     "url": ""
@@ -13,17 +13,23 @@
   },
   "scripts": {
     "start": "brunch watch --server",
-    "test": "brunch test"
+    "test": "mocha-phantomjs public/test/index.html"
   },
   "dependencies": {
     "javascript-brunch": ">= 1.0 < 1.6",
     "coffee-script-brunch": ">= 1.0 < 1.6",
 
     "css-brunch": ">= 1.0 < 1.6",
+    "stylus-brunch": ">= 1.0 < 1.6",
+
+    "handlebars-brunch": ">= 1.0 < 1.6",
 
     "uglify-js-brunch": ">= 1.0 < 1.6",
     "clean-css-brunch": ">= 1.0 < 1.6"
   },
   "devDependencies": {
+    "chai": "1.2.0",
+    "sinon": "1.4.2",
+    "sinon-chai": "2.1.2"
   }
 }

@@ -1,33 +1,31 @@
+# See https://github.com/brunch/brunch/blob/stable/docs/config.md for docs.
 exports.config =
-  # See http://brunch.readthedocs.org/en/latest/config.html for documentation.
+
+  paths:
+    watched:
+        [ 'app-base', 'test', 'vendor',  # defaults
+          'app-extend'                   # extending app
+        ]
+
   files:
     javascripts:
       joinTo:
-        'javascripts/app.js': /^app/
-        'javascripts/vendor.js': /^vendor/
-        'test/javascripts/test.js': /^test(\/|\\)(?!vendor)/
-        'test/javascripts/test-vendor.js': /^test(\/|\\)(?=vendor)/
-      order:
-        before: [
-          'vendor/scripts/modernizr-latest.js'
-          'vendor/scripts/jquery-2.0.0.js'
-          'vendor/scripts/jquery-ui-1.10.2.custom.js'
-          'vendor/scripts/jquery-hammer.js'
-          'vendor/scripts/underscore.js'
-          'vendor/scripts/backbone.js'
-          'vendor/scripts/backbone.localStorage.js'
-          'vendor/scripts/backbone.analytics.js'
-          'vendor/scripts/PieceMakerLib.js'
-          'vendor/scripts/postmessenger.js'
-        ]
+        'javascripts/app.js'    : /^app-base/
+        'javascripts/vendor.js' : /^(?!app(-base|-extend))/
 
     stylesheets:
       joinTo:
-        'stylesheets/app.css': /^(app|vendor)/
-        'test/stylesheets/test.css': /^test/
-      order:
-        before: []
-        after: []
+        'stylesheets/app-base.css'   : /^app-base/
+        'stylesheets/app-extend.css' : /^app-extend/
 
     templates:
-      joinTo: 'javascripts/app.js'
+      joinTo:
+        'javascripts/app.js' : /^app(-base|-extend)/ # read templates from theme
+
+  modules:
+
+    nameCleaner: (path) ->
+      path.replace(/^app(-base|-extend)\//, '') # clean theme from name to override app
+
+  server:
+    port: 3331
