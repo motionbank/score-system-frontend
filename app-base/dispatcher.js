@@ -2,6 +2,8 @@ var pm = require('postmessenger');
 
 module.exports = (function(){
 
+	_.extend(this.prototype,Chaplin.EventBroker);
+
 	var listeners = [];
 	
 	pm.on('connect!',function(req,res){
@@ -20,6 +22,7 @@ module.exports = (function(){
 				// ignore the one that sent it ..
 			}
 		}
+		this.publishEvent(req.name,req.data);
 	});
 
 	var addListener = function addListener (l) {
