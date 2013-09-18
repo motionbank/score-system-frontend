@@ -10,7 +10,7 @@ exports.config =
   files:
     javascripts:
       joinTo:
-        'javascripts/app.js'    : /^app-base/
+        'javascripts/app.js'    : /^app(-base|-extend)/
         'javascripts/vendor.js' : /^(?!app(-base|-extend))/
 
     stylesheets:

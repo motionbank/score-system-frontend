@@ -15,9 +15,9 @@ module.exports = BaseCollectionView.extend({
 	initialize : function () {
 		BaseCollectionView.prototype.initialize.apply(this,arguments);
 
-		postmessenger.on('>>ping',function(req,res){
-			console.log( req.data );
-		});
+		// postmessenger.on('>>ping',function(req,res){
+		// 	console.log( req.data );
+		// });
 	},
 
 	render : function () {
