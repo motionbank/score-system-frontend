@@ -32,7 +32,6 @@ module.exports = BaseView.extend({
 	active : false,
 
 	getTemplateData : function () {
-		console.log( this.model.attributes );
 		var data = _.extend({},this.model.attributes);
 		data.content = '';
 		return data;
