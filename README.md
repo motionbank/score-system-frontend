@@ -1,22 +1,36 @@
-Testing Chaplin.js application framework
-========================================
+Motion Bank score system frontend
+=================================
 
-##Modules, theming and overriding html / css
+These files make up the frontend (single app website) of our "online score" system. Under development ... i don't think you want to use it right now.
 
-This can be done through [brunch](http://brunch.io/)'s config file.
+**Running this locally**
 
-theme/assets/ --> get's copied into public/
-theme/*.css   --> joined into public/stylesheets/theme.css
-theme/*       --> all other files get handled just like under app/
+It requires a backend / API which needes to be installed separately:
+https://github.com/motionbank/score-system-backend
 
-##In-set event dispatcher
+Copy and rename `config-default.js` to `config.js` (in app/js/config/). Set values as needed.
 
-- based on PostMessenger
+Install [brunch](http://brunch.io/)
+```
+$ npm install brunch
+```
 
-##Theming:
-- replace meta tags (title, description)
-- replace title
-- replace favicon and twitter / fb images
-? replace google analytics 
-? replace google webmaster
-- replace site url twitter / fb
+Run brunch:
+```
+$ brunch w --server # skip the --server option if you have your own
+```
+
+Now point your browser to your local server (or the one that brunch started) and enjoy.
+
+**Running on a server**
+
+Run brunch once and the upload the contents of ```public/``` to your server.
+
+**Resources**
+
+See:
+- http://motionbank.org/
+- http://theforsythecompany.com/
+
+We are:
+- https://github.com/motionbank
