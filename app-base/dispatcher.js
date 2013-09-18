@@ -8,6 +8,10 @@ module.exports = (function(){
 		addListener({ source: req.source, origin: req.origin });
 	});
 
+	pm.on('get-config',function(req,res){
+		res.send('set-config',require('config/config'));
+	});
+
 	pm.on(/^>>.+/,function(req, res){
 		for ( var i = 0; i < listeners.length; i++ ) {
 			if ( listeners[i].source !== req.source ) {
