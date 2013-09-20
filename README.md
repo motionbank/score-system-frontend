@@ -37,6 +37,8 @@ Run brunch once: `brunch b` and then upload the contents of `public/` to your se
 
 The base of the system lives in `app-base`, you can extend anything in there by creating another directory called `app-extend` next to it. Place any HTML / CSS / JS code in there using the same structure as in `app-base`. Once brunch is run the contents will be compiled along.
 
+See an example extension package [here](https://github.com/motionbank/score-system-frontend-sample)
+
 ****
 
 **Resources**
