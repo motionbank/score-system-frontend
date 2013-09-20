@@ -8,7 +8,7 @@ These files make up the front end of our "online score" system. Under developmen
 The front end is a single page application based on [Chaplin.js](http://chaplinjs.org/) and [Backbone.js](http://backbone.js.org/). It requires a back end that serves the actual content through an API:
 https://github.com/motionbank/score-system-backend
 
-Copy and rename `config-default.js` to `config.js` (in app/js/config/). Set values for the backend as needed.
+Copy and rename `config-default.js` to `config.js` (in `app/config/`). Set values for the backend as needed.
 
 Install [Node.js](http://nodejs.org/), we are running v0.8.2 locally.
 
@@ -31,11 +31,11 @@ Now point your browser to http://localhost:3331/
 
 **Deploy it**
 
-Run brunch once: ```brunch b``` and then upload the contents of ```public/``` to your server.
+Run brunch once: `brunch b` and then upload the contents of `public/` to your server.
 
 **Extending the base**
 
-The base of the system lives in ```app-base```, you can extend anything in there by creating another directory called ```app-extend``` next to it. Place any HTML / CSS / JS code in there using the same structure as in ```app-base```. Once brunch is run the contents will be compiled along.
+The base of the system lives in `app-base`, you can extend anything in there by creating another directory called `app-extend` next to it. Place any HTML / CSS / JS code in there using the same structure as in `app-base`. Once brunch is run the contents will be compiled along.
 
 ****
 
