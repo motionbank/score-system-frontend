@@ -3,7 +3,7 @@ module.exports = {
 	debug : 	false,
 	islocal : 	true,
 
-	host : 		'localhost:3333',
+	host : 		'localhost:3331',
 	apiHost : 	'localhost:5555',
 	adminHost : 'localhost:5556',
  	baseUrl : 	'',
