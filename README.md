@@ -5,7 +5,7 @@ These files make up the front end of our "online score" system. Under developmen
 
 **Running this locally**
 
-	The front end is a single page application based on [Chaplin.js](http://chaplinjs.org/) and [Backbone.js](http://backbone.js.org/). It requires a back end that serves the actual content through an API:
+The front end is a single page application based on [Chaplin.js](http://chaplinjs.org/) and [Backbone.js](http://backbone.js.org/). It requires a back end that serves the actual content through an API:
 https://github.com/motionbank/score-system-backend
 
 Copy and rename `config-default.js` to `config.js` (in app/js/config/). Set values for the backend as needed.
