@@ -1,30 +1,43 @@
 Motion Bank score system frontend
 =================================
 
-These files make up the frontend (single app website) of our "online score" system. Under development ... i don't think you want to use it right now.
+These files make up the front end of our "online score" system. Under development ... i don't think you want to use it right now.
 
 **Running this locally**
 
-It requires a backend / API which needes to be installed separately:
+The front end is a single page application based on (Chaplin.js)[http://chaplinjs.org/] and (Backbone.js)[http://backbone.js.org/]. It requires a back end that serves the actual content through an API:
 https://github.com/motionbank/score-system-backend
 
-Copy and rename `config-default.js` to `config.js` (in app/js/config/). Set values as needed.
+Copy and rename `config-default.js` to `config.js` (in app/js/config/). Set values for the backend as needed.
 
-Install [brunch](http://brunch.io/)
+Install [Node.js](http://nodejs.org/), we are running v0.8.2 locally.
+
+Install [Brunch](http://brunch.io/):
 ```
-$ npm install brunch
+$ npm install -g brunch
+```
+
+Now fetch the needed modules and libraries:
+```
+$ npm install
+$ bower install
 ```
 
 Run brunch:
 ```
 $ brunch w --server # skip the --server option if you have your own
 ```
+Now point your browser to http://localhost:3331/
 
-Now point your browser to your local server (or the one that brunch started) and enjoy.
+**Deploy it**
 
-**Running on a server**
+Run brunch once: ```brunch b``` and then upload the contents of ```public/``` to your server.
 
-Run brunch once and the upload the contents of ```public/``` to your server.
+**Extending the base**
+
+The base of the system lives in ```app-base```, you can extend anything in there by creating another directory called ```app-extend``` next to it. Place any HTML / CSS / JS code in there using the same structure as in ```app-base```. Once brunch is run the contents will be compiled along.
+
+****
 
 **Resources**
 
