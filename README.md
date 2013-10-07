@@ -27,7 +27,8 @@ $ bower install
 
 Run brunch:
 ```
-$ brunch w --server # skip the --server option if you have your own
+$ brunch w --server
+#$ brunch w # or skip the --server option if you have your own
 ```
 Now point your browser to http://localhost:3331/
 

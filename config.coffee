@@ -4,7 +4,7 @@ exports.config =
   paths:
     watched:
         [ 'app-base', 'test', 'vendor',  # defaults
-          'app-extend'                   # extending app
+          'app-extend'                   # extending app-base
         ]
 
   files:
@@ -21,7 +21,8 @@ exports.config =
 
     templates:
       joinTo:
-        'javascripts/app.js' : /^app(-base|-extend)/ # read templates from theme
+        'javascripts/app-base.js'   : /^app-base/
+        'javascripts/app-extend.js' : /^app-extend/
 
   modules:
 
