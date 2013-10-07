@@ -10,8 +10,9 @@ exports.config =
   files:
     javascripts:
       joinTo:
-        'javascripts/app.js'    : /^app(-base|-extend)/
-        'javascripts/vendor.js' : /^(?!app(-base|-extend))/
+        'javascripts/app-base.js'   : /^app-base/
+        'javascripts/app-extend.js' : /^app-extend/
+        'javascripts/vendor.js'     : /^(?!app(-base|-extend))/
 
     stylesheets:
       joinTo:
