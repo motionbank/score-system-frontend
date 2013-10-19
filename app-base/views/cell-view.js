@@ -43,9 +43,19 @@ module.exports = BaseView.extend({
 		}
 
 		this.$el.addClass( 'type-' + this.model.get('type') );
-		this.$el.css({
+
+		// use cell fields that start with "css-" as css attributes on the $el
+		var cssOpts = {
 			'background-image': 'url('+this.model.getPosterImageURL()+')'
+		};
+		attribs = {};
+		_.filter(this.model.attributes.fields,function(f){
+			return /^css-/i.test(f.name);
+		}).map(function(f){
+			attribs[f.name.replace(/^css-/i,'')] = f.value;
 		});
+		cssOpts = _.extend(cssOpts,attribs);
+		this.$el.css(cssOpts);
 	},
 
 	activate : function () {
