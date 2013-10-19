@@ -1,8 +1,7 @@
-var pm = require('postmessenger');
+var pm = require('postmessenger'),
+	mediator = require('mediator');
 
 module.exports = (function(){
-
-	_.extend(this.prototype,Chaplin.EventBroker);
 
 	var listeners = [];
 	
@@ -22,7 +21,7 @@ module.exports = (function(){
 				// ignore the one that sent it ..
 			}
 		}
-		this.publishEvent(req.name,req.data);
+		mediator.publish('dispatcher:'+req.name,req.data);
 	});
 
 	var addListener = function addListener (l) {
