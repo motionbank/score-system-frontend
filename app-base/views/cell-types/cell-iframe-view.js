@@ -5,9 +5,32 @@ var CellDefaultView = require('views/cell-view'),
 
 module.exports = CellDefaultView.extend({
 
+	events : {
+		'click' : 'renderContent'
+	},
+
+	// keep this in sync with cell-vimeo!
 	render : function () {
 		CellDefaultView.prototype.render.apply(this,arguments);
-		// call after render
+
+		if ( this.model.attributes['autoload'] && 
+			/^(1|true)$/i.test(this.model.attributes['autoload']) ) {
+			this.renderContent();
+		}
+
+		return this;
+	},
+
+	renderContent : function () {
+
+		// show content, hide info
+		$('.element-hidden',this.$el).removeClass('element-hidden');
+		$('.info',this.$el).addClass('element-hidden');
+
+		// load iframe from data-src
+		$('iframe',this.$el).attr('src',$('iframe',this.$el).data('src'));
+
+		// connect to iframe with postmessenger
 		_(function(){
 			var view = this;
 			$('iframe',this.$el).load(function(){
@@ -30,7 +53,6 @@ module.exports = CellDefaultView.extend({
 				);
 			});
 		}).bind(this).defer();
-		return this;
 	},
 
 	getTemplateData : function () {

@@ -6,10 +6,12 @@
 <!--
 https://developer.vimeo.com/player/embedding#universal-parameters
 -->
-	<iframe src="http://player.vimeo.com/video/{{vimeo-id}}{{#if vimeo-params}}?
+	<iframe src='' 
+			data-src="http://player.vimeo.com/video/{{vimeo-id}}{{#if vimeo-params}}?
 				{{#each vimeo-params}}{{this}}{{/each}}
 			{{/if}}" 
-		    width="{{vimeo-width}}" height="{{vimeo-height}}" 
+		    {{#if iframe-width}}width="{{iframe-width}}" {{/if}}
+		    {{#if iframe-height}}height="{{iframe-height}}" {{/if}}
 		    frameborder="0" 
 		    webkitAllowFullScreen mozallowfullscreen allowFullScreen
 		    {{#each iframe-attrs}}{{this}} {{/each}} ></iframe>
