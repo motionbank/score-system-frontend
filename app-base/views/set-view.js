@@ -36,6 +36,8 @@ module.exports = View.extend({
 	render : function () {
 
 		View.prototype.render.apply(this,arguments);
+
+		this.layoutAttributes.position = 0.0;
 		
 		this.model.collectionView.render();
 		// call updateCellGrid() after render finished (for it to have width, height avail)
