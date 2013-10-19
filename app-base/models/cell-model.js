@@ -46,7 +46,10 @@ module.exports = BaseModel.extend({
 		return 'http://' +
 				config.cloudFront.fileHost + 
 				config.cloudFront.baseUrl + 
-				'/'+(this.get('type') === 'set-link' ? 'sets' : 'cells')+'/poster/full/' +
+				'/'+
+				//(this.get('type') === 'set-link' ? 'sets' : 'cells')+
+				'cells'+
+				'/poster/full/' +
 				this.get('poster');
 	}
 
