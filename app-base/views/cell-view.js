@@ -38,24 +38,27 @@ module.exports = BaseView.extend({
 	},
 
 	render : function () {
+		
 		if ( this.active ) {
 			BaseView.prototype.render.apply(this,arguments);
+
+			this.$el.addClass( 'type-' + this.model.get('type') );
+
+			// use cell fields that start with "css-" as css attributes on the $el
+			var cssOpts = {
+				'background-image': 'url('+this.model.getPosterImageURL()+')'
+			};
+			attribs = {};
+			_.filter(this.model.attributes.fields,function(f){
+				return /^css-/i.test(f.name);
+			}).map(function(f){
+				attribs[f.name.replace(/^css-/i,'')] = f.value;
+			});
+			cssOpts = _.extend(cssOpts,attribs);
+			this.$el.css(cssOpts);
 		}
 
-		this.$el.addClass( 'type-' + this.model.get('type') );
-
-		// use cell fields that start with "css-" as css attributes on the $el
-		var cssOpts = {
-			'background-image': 'url('+this.model.getPosterImageURL()+')'
-		};
-		attribs = {};
-		_.filter(this.model.attributes.fields,function(f){
-			return /^css-/i.test(f.name);
-		}).map(function(f){
-			attribs[f.name.replace(/^css-/i,'')] = f.value;
-		});
-		cssOpts = _.extend(cssOpts,attribs);
-		this.$el.css(cssOpts);
+		return this;
 	},
 
 	activate : function () {
