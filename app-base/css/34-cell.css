@@ -2,7 +2,7 @@
 .cell-collection .cell {
 	position: absolute;
 	color: white;
-	background-color: white;
+	background-color: transparent;
 	left: 0px;
 	top: 0px;
 }
