@@ -65,6 +65,16 @@ module.exports = CellDefaultView.extend({
 		// if ( false === /^http[s]:\/\/.+/.test(data['iframe-src']) ) {
 		// 	data['iframe-src'] = 'http://' + config.host + config.baseUrl + data['iframe-src'];
 		// }
+		
+		// collect attributes for <iframe>
+		data.attr = {};
+		_.each(data.fields, function(element, index, list) {
+			if (element.name.substr(0,5) == 'attr-') {
+				var attrName = element.name.substr(5);
+				data.attr[attrName] = element.value;
+			}
+		});
+		
 		return data;
 	}
 
