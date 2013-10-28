@@ -33,7 +33,9 @@ module.exports = CellDefaultView.extend({
 		// connect to iframe with postmessenger
 		_(function(){
 			var view = this;
-			$('iframe',this.$el).load(function(){
+			var iframe = $('iframe',this.$el);
+			
+			iframe.load(function(){
 				view.$iframe = $(this);
 				// if iframe on another domain add that to the accept list
 				var src = view.model.get('iframe-src');
@@ -52,6 +54,13 @@ module.exports = CellDefaultView.extend({
 					iframe_domain
 				);
 			});
+			
+			// prevent white flicker when iframe loads
+			iframe.css('visibility', 'hidden');
+			iframe.load(function() {
+				$(this).css('visibility', 'visible');
+			});
+			
 		}).bind(this).defer();
 	},
 
