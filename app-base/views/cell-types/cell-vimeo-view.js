@@ -1,27 +1,14 @@
-var CellDefaultView = require('views/cell-view');
+var CellIFrameView = require('views/cell-types/cell-iframe-view');
 
-module.exports = CellDefaultView.extend({
+module.exports = CellIFrameView.extend({
 
-	events : {
-		click : 'renderContent'
-	},
+	initialize : function ( opts ) {
 
-	// keep this in sync with cell-iframe!
-	render : function () {
-		CellDefaultView.prototype.render.apply(this,arguments);
+		CellIFrameView.prototype.initialize.apply(this,arguments);
 
-		if ( this.model.attributes['autoload'] && 
-			/^(1|true)$/i.test(this.model.attributes['autoload']) ) {
-			this.renderContent();
-		}
+		this.model.set('iframe-src','http://player.vimeo.com/video/'+this.model.get('vimeo-id'));
 
-		return this;
-	},
-
-	renderContent : function () {
-		$('.element-hidden',this.$el).removeClass('element-hidden');
-		$('iframe',this.$el).attr('src',$('iframe',this.$el).data('src'));
-		$('.info',this.$el).addClass('element-hidden');
+		this.template = require('views/templates/cell-types/cell-iframe');
 	}
 
 });

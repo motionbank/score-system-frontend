@@ -22,20 +22,20 @@ module.exports = CellDefaultView.extend({
 	},
 
 	renderContent : function () {
-
-		// show content, hide info
-		$('.element-hidden',this.$el).removeClass('element-hidden');
-		$('.info',this.$el).addClass('element-hidden');
-
 		// load iframe from data-src
 		$('iframe',this.$el).attr('src',$('iframe',this.$el).data('src'));
 
 		// connect to iframe with postmessenger
 		_(function(){
+
 			var view = this;
 			var iframe = $('iframe',this.$el);
 			
-			iframe.load(function(){
+			iframe.load(function() {
+				// show content, hide info
+				$('.element-hidden',view.$el).removeClass('element-hidden');
+				$('.info',view.$el).addClass('element-hidden');
+
 				view.$iframe = $(this);
 				// if iframe on another domain add that to the accept list
 				var src = view.model.get('iframe-src');
@@ -46,6 +46,7 @@ module.exports = CellDefaultView.extend({
 					})();
 					pm.accept(iframe_domain);
 				}
+
 				// connect it
 				pm.send(
 					'connect?',
@@ -55,18 +56,12 @@ module.exports = CellDefaultView.extend({
 				);
 			});
 			
-			// prevent white flicker when iframe loads
-			iframe.css('visibility', 'hidden');
-			iframe.load(function() {
-				$(this).css('visibility', 'visible');
-			});
-			
 		}).bind(this).defer();
 	},
 
 	getTemplateData : function () {
 		var data = CellDefaultView.prototype.getTemplateData.apply(this,arguments);
-		if ( Handlebars.compile ) {
+		if ( Handlebars.compile && data['iframe-src'] ) {
 			data['iframe-src'] = Handlebars.compile(data['iframe-src'])(config);
 		}
 		var spl = data['iframe-src'].split('?');
