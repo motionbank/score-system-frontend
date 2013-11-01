@@ -19,5 +19,14 @@ module.exports = BaseCollection.extend({
 	modeltype : 'cell-collection',
 
 	//model : CellModel
+
+	focusedCell : null, // most recently clicked cell
+
+	// called when a cell is clicked
+	cellViewClickCb : function (cellModel) {
+		if ( this.focusedCell) this.focusedCell.set('focused',false); // unfocus old cell
+		this.focusedCell = cellModel; // save new cell
+		this.focusedCell.set('focused',true); // focus new cell
+	}
 	
 });

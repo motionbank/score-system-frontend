@@ -5,9 +5,11 @@ var CellDefaultView = require('views/cell-view'),
 
 module.exports = CellDefaultView.extend({
 
-	events : {
-		'click' : 'renderContent'
-	},
+	// events : {
+	// 	'click' : function () {
+	// 		this.renderContent();
+	// 	}
+	// },
 
 	// keep this in sync with cell-vimeo!
 	render : function () {
@@ -80,6 +82,21 @@ module.exports = CellDefaultView.extend({
 		});
 		
 		return data;
+	},
+	
+	listen : {
+		// listen to changes of the active property
+		'change:focused model' : function(model, focused, options) {
+			if (focused) {
+				this.activate();
+				this.renderContent();
+			} else {
+				var isSticky = _.any(model.attributes.fields, function(field) {
+					return (field.name === 'sticky' && field.value === 'true');
+				});
+				if (!isSticky) this.deactivate();
+			}
+		}
 	}
 
 });

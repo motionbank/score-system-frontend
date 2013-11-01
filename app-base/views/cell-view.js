@@ -60,17 +60,18 @@ module.exports = BaseView.extend({
 
 		return this;
 	},
-
+	
 	activate : function () {
 		if ( !this.active ) {
 			this.active = true;
 			this.render();
 		}
+		console.log("activate: " + this.cid);
 	},
 
 	deactivate : function () {
 		this.active = false;
 		this.$el.empty();
+		console.log("deactivate: " + this.cid);
 	}
-
 });
