@@ -28,6 +28,13 @@ module.exports = BaseModel.extend({
 		connection_id : null
 	},
 
+	// check if this cell has the sticky flag set
+	isSticky : function() {
+		return _.any(this.attributes.fields, function(field) {
+			return ( field.name === 'sticky' && (field.value === 'true' || field.value === '1') );
+		});
+	},
+
 	set : function ( opts ) {
 		// override some attributes per set<->cell connection
 		if ( opts && typeof opts === 'object' && 'fields' in opts ) {
