@@ -43,7 +43,6 @@ module.exports = BaseView.extend({
 			BaseView.prototype.render.apply(this,arguments);
 
 			this.$el.addClass( 'type-' + this.model.get('type') );
-			this.$el.addClass( this.cid );
 
 			// use cell fields that start with "css-" as css attributes on the $el
 			var cssOpts = {
@@ -67,12 +66,12 @@ module.exports = BaseView.extend({
 			this.active = true;
 			this.render();
 		}
-		console.log("activate: " + this.cid);
+		// console.log("activate: " + this.cid);
 	},
 
 	deactivate : function () {
 		this.active = false;
 		this.$el.empty();
-		console.log("deactivate: " + this.cid);
+		// console.log("deactivate: " + this.cid);
 	}
 });

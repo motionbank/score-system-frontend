@@ -94,35 +94,9 @@ module.exports = CellDefaultView.extend({
 				var isSticky = _.any(model.attributes.fields, function(field) {
 					return ( field.name === 'sticky' && (field.value === 'true' || field.value === '1') );
 				});
-				if (!model.isSticky()) this.deactivate();
+				if (!isSticky) this.deactivate();
 			}
 		}
-	},
-
-	activate : function () {
-		console.log("activate iframe: " + this.cid);
-
-		if ( !this.active ) {
-			console.log("activate iframe: " + this.cid);
-			this.active = true;
-			this.render();
-		}
-
-		if (this.model.isSticky()) {
-			var iframe = $('iframe', this.$el)[0];
-			// console.log(iframe.contentWindow);
-			pm.send('activate!', {}, iframe.contentWindow );
-		}
-	},
-
-	deactivate : function () {
-		if (!this.model.isSticky() && this.active) {
-			console.log("deactivate iframe: " + this.cid);
-			this.active = false;
-			this.$el.empty();
-		} else {
-			var iframe = $('iframe', this.$el)[0];
-			if (iframe) pm.send('deactivate!', {}, iframe.contentWindow );
-		}
 	}
+
 });
