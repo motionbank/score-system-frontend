@@ -5,12 +5,15 @@ var CellDefaultView = require('views/cell-view'),
 
 module.exports = CellDefaultView.extend({
 
-	events : {
-		'click' : 'renderContent'
-	},
+	// events : {
+	// 	'click' : function () {
+	// 		this.renderContent();
+	// 	}
+	// },
 
 	// keep this in sync with cell-vimeo!
 	render : function () {
+
 		CellDefaultView.prototype.render.apply(this,arguments);
 
 		if ( this.model.attributes['autoload'] && 
@@ -22,20 +25,20 @@ module.exports = CellDefaultView.extend({
 	},
 
 	renderContent : function () {
-
-		// show content, hide info
-		$('.element-hidden',this.$el).removeClass('element-hidden');
-		$('.info',this.$el).addClass('element-hidden');
-
 		// load iframe from data-src
 		$('iframe',this.$el).attr('src',$('iframe',this.$el).data('src'));
 
 		// connect to iframe with postmessenger
 		_(function(){
+
 			var view = this;
 			var iframe = $('iframe',this.$el);
 			
-			iframe.load(function(){
+			iframe.load(function() {
+				// show content, hide info
+				$('.element-hidden',view.$el).removeClass('element-hidden');
+				$('.info',view.$el).addClass('element-hidden');
+
 				view.$iframe = $(this);
 				// if iframe on another domain add that to the accept list
 				var src = view.model.get('iframe-src');
@@ -46,6 +49,7 @@ module.exports = CellDefaultView.extend({
 					})();
 					pm.accept(iframe_domain);
 				}
+
 				// connect it
 				pm.send(
 					'connect?',
@@ -55,18 +59,12 @@ module.exports = CellDefaultView.extend({
 				);
 			});
 			
-			// prevent white flicker when iframe loads
-			iframe.css('visibility', 'hidden');
-			iframe.load(function() {
-				$(this).css('visibility', 'visible');
-			});
-			
 		}).bind(this).defer();
 	},
 
 	getTemplateData : function () {
 		var data = CellDefaultView.prototype.getTemplateData.apply(this,arguments);
-		if ( Handlebars.compile ) {
+		if ( Handlebars.compile && data['iframe-src'] ) {
 			data['iframe-src'] = Handlebars.compile(data['iframe-src'])(config);
 		}
 		var spl = data['iframe-src'].split('?');
@@ -85,6 +83,58 @@ module.exports = CellDefaultView.extend({
 		});
 		
 		return data;
-	}
+	},
+	
+	listen : {
+		// listen to changes of the active property
+		'change:focused model' : function(model, focused, options) {
+			if (focused) {
+				this.activate();
+				this.renderContent();
+			} else {
+				if (!model.isSticky()) this.deactivate();
+			}
+		}
+	},
 
+	activate : function () {
+		if ( !this.active ) {
+			console.log("activate iframe: " + this.cid);
+
+			this.active = true; // needs to be before render(). why? don't know...
+
+			if ( !this.model.isSticky() ) {
+				this.render();
+			} else {
+				if (!this.rendered) {
+					this.render();
+					var iframe = $('iframe', this.$el)[0];
+					var that = this;
+					$(iframe).one('load', function(){
+						pm.send(that.active ? 'activate!' : 'deactivate!', {}, this.contentWindow );
+						that.rendered = true;
+					});
+				} else {
+					var iframe = $('iframe', this.$el)[0];
+					pm.send( 'activate!', {}, iframe.contentWindow );
+			}}
+
+		}
+	},
+
+	deactivate : function () {
+		if ( this.active ) {
+			if (!this.model.isSticky()) {
+				console.log("deactivate iframe: " + this.cid);
+				this.$el.empty();
+				this.rendered = false;
+			} else {
+				var iframe = $('iframe', this.$el)[0];
+				if (iframe)  {
+					pm.send('deactivate!', {}, iframe.contentWindow );
+				}
+			}
+			this.active = false;
+		}
+	}
 });

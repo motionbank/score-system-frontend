@@ -42,7 +42,18 @@ module.exports = BaseCollectionView.extend({
 		} catch (e) {
 			// ignore
 		}
-		return new CellTypeView({ model:model, autoRender:false });
+
+		var cellView = new CellTypeView({ model:model, autoRender:false });
+		if (model.get('type') === 'iframe' || model.get('type') === 'vimeo') {
+			// handle clicking on this cell
+			cellView.delegate( 'click', function(evt) {
+				// console.log("click: " + cellView.cid);
+				// notify collection so it can handle focuesd state
+				model.collection.focusCell(model);
+			});
+		}
+		
+		return cellView;
 	}
 
 });
