@@ -92,7 +92,7 @@ module.exports = CellDefaultView.extend({
 				this.renderContent();
 			} else {
 				var isSticky = _.any(model.attributes.fields, function(field) {
-					return (field.name === 'sticky' && field.value === 'true');
+					return ( field.name === 'sticky' && (field.value === 'true' || field.value === '1') );
 				});
 				if (!isSticky) this.deactivate();
 			}
