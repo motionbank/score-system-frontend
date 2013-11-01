@@ -13,6 +13,7 @@ module.exports = CellDefaultView.extend({
 
 	// keep this in sync with cell-vimeo!
 	render : function () {
+
 		CellDefaultView.prototype.render.apply(this,arguments);
 
 		if ( this.model.attributes['autoload'] && 
@@ -91,12 +92,49 @@ module.exports = CellDefaultView.extend({
 				this.activate();
 				this.renderContent();
 			} else {
-				var isSticky = _.any(model.attributes.fields, function(field) {
-					return ( field.name === 'sticky' && (field.value === 'true' || field.value === '1') );
-				});
-				if (!isSticky) this.deactivate();
+				if (!model.isSticky()) this.deactivate();
 			}
 		}
-	}
+	},
 
+	activate : function () {
+		if ( !this.active ) {
+			console.log("activate iframe: " + this.cid);
+
+			this.active = true; // needs to be before render(). why? don't know...
+
+			if ( !this.model.isSticky() ) {
+				this.render();
+			} else {
+				if (!this.rendered) {
+					this.render();
+					var iframe = $('iframe', this.$el)[0];
+					var that = this;
+					$(iframe).one('load', function(){
+						pm.send(that.active ? 'activate!' : 'deactivate!', {}, this.contentWindow );
+						that.rendered = true;
+					});
+				} else {
+					var iframe = $('iframe', this.$el)[0];
+					pm.send( 'activate!', {}, iframe.contentWindow );
+			}}
+
+		}
+	},
+
+	deactivate : function () {
+		if ( this.active ) {
+			if (!this.model.isSticky()) {
+				console.log("deactivate iframe: " + this.cid);
+				this.$el.empty();
+				this.rendered = false;
+			} else {
+				var iframe = $('iframe', this.$el)[0];
+				if (iframe)  {
+					pm.send('deactivate!', {}, iframe.contentWindow );
+				}
+			}
+			this.active = false;
+		}
+	}
 });
