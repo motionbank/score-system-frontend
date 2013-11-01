@@ -20,10 +20,10 @@ module.exports = BaseCollection.extend({
 
 	//model : CellModel
 
-	focusedCell : null, // most recently clicked cell
+	focusedCell : null, // i.e. most recently clicked iframe or vimeo cell
 
-	// called when a cell is clicked
-	cellViewClickCb : function (cellModel) {
+	// focus a cell 
+	focusCell : function (cellModel) {
 		if ( this.focusedCell) this.focusedCell.set('focused',false); // unfocus old cell
 		this.focusedCell = cellModel; // save new cell
 		this.focusedCell.set('focused',true); // focus new cell

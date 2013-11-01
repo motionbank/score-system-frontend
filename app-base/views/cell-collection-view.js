@@ -44,12 +44,14 @@ module.exports = BaseCollectionView.extend({
 		}
 
 		var cellView = new CellTypeView({ model:model, autoRender:false });
-		// handle clicking on this cell
-		cellView.delegate( 'click', function(evt) {
-			console.log("click: " + cellView.cid);
-			// notify collection so it can handle focuesd state
-			model.collection.cellViewClickCb(model);
-		});
+		if (model.get('type') === 'iframe' || model.get('type') === 'vimeo') {
+			// handle clicking on this cell
+			cellView.delegate( 'click', function(evt) {
+				// console.log("click: " + cellView.cid);
+				// notify collection so it can handle focuesd state
+				model.collection.focusCell(model);
+			});
+		}
 		
 		return cellView;
 	}
