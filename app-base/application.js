@@ -6,14 +6,35 @@ var config = require('config/config'),
 
 var loadUserSets = function loadUserSets ( user_id, next ) {
 	next = next || function(){};
+	
+	// show error
+	var showError = function(msg) {
+		$('#portal .loading').addClass('hidden');
+		$('#portal .error').html(msg).fadeIn(1000);
+	},
+
+	// show "Enter site" link
+	showEnter = function() {
+		$('#portal .loading').addClass('hidden');
+		var enter = $('#portal .enter').fadeIn(1000);
+		// put link on title too
+		$('#cover h1 a').attr('href', enter.find('a').attr('href'));
+	};
+	
 	jQuery.ajax({
 		url: 'http://' + config.apiHost + '/users/'+user_id+'/sets',
 		dataType: 'json',
 		success: function loadUserSetsSuccess ( userWithSets ) {
-			next.apply(null,[null,userWithSets]);
+			if ( userWithSets ) {
+				next.apply(null,[null,userWithSets]);
+				showEnter();
+			} else { // userWithSets == "", null, undefined
+				showError('Error loading sets: Bad set data');
+			}
 		},
-		error: function loadUserSetsError (err) {
-			next.apply(null,arguments);
+		error: function loadUserSetsError (jqXHR, textStatus, errorThrown) {
+			//next.apply(null,arguments);
+			showError('Error loading sets' + (errorThrown ? ': ' + errorThrown : '') );
 		}
 	});
 }
