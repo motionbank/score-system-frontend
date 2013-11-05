@@ -8,5 +8,5 @@ module.exports = Controller.extend({
 			region: 'content'
 		});
 	}
-	
+
 });

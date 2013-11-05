@@ -6,7 +6,7 @@ module.exports = View.extend({
   	id: 'cover', // use #cover to get styling for free
   	className: 'error container',
   	region : 'content',
-  	containerMethod: 'html', // replace content instead of appending it by default
+  	containerMethod: 'html', // replace content instead of appending it
 
 	initialize : function (opts) {
 		if (!opts) opts = {};
