@@ -7,8 +7,15 @@ var config = require('config/config'),
 var loadUserSets = function loadUserSets ( user_id, next ) {
 	next = next || function(){};
 	
+	// show "loading..."
+	var showLoading = function() {
+		$('#portal .enter').addClass('hidden');
+		$('#portal .loading').removeClass('hidden');
+		$('#cover h1 a').attr('href', '#');
+	},
+
 	// show error
-	var showError = function(msg) {
+	showError = function(msg) {
 		$('#portal .loading').addClass('hidden');
 		$('#portal .error').html(msg).fadeIn(1000);
 	},
@@ -20,9 +27,13 @@ var loadUserSets = function loadUserSets ( user_id, next ) {
 		// put link on title too
 		$('#cover h1 a').attr('href', enter.find('a').attr('href'));
 	};
+
+	showLoading();
 	
 	jQuery.ajax({
 		url: 'http://' + config.apiHost + '/users/'+user_id+'/sets',
+		//url: 'http://localhost:3331/', // test faulty data
+		//url: 'http://xnxnxnx.cmxmmxm', // test url not found
 		dataType: 'json',
 		success: function loadUserSetsSuccess ( userWithSets ) {
 			if ( userWithSets ) {
@@ -34,7 +45,10 @@ var loadUserSets = function loadUserSets ( user_id, next ) {
 		},
 		error: function loadUserSetsError (jqXHR, textStatus, errorThrown) {
 			//next.apply(null,arguments);
-			showError('Error loading sets' + (errorThrown ? ': ' + errorThrown : '') );
+			showError('Error loading sets' + (textStatus ? ': ' + textStatus + ' (' + jqXHR.status + ')' : '') );
+		},
+		complete: function() {
+			console.log(arguments);
 		}
 	});
 }

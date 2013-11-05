@@ -1,6 +1,7 @@
 require('lib/view-helper'); // Just load the view helpers, no return value
 
 module.exports = Chaplin.View.extend({
+	containerMethod: 'html', // when rendering, replace content instead of appending it
 
 	initialize : function () {
 		Chaplin.View.prototype.initialize.apply(this, arguments);

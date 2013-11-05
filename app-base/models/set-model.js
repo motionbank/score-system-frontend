@@ -27,7 +27,6 @@ module.exports = BaseModel.extend({
   	},
 
   	sync : function ( meth, mdl, opts ) {
-
   		this.beginSync();
 
   		if ( meth === 'read' ) {
@@ -62,11 +61,14 @@ module.exports = BaseModel.extend({
 					});
 
 					this.finishSync();
+
+					//opts.success(data); // run success callback
 				},
-				error: function (err) {
-					console.log( arguments );
-					throw( err );
+				error: function () {
+					// throw( err );
 					this.abortSync();
+					opts.error.apply(null, arguments); // run error callback
+
 				},
 				context: this
 			});
