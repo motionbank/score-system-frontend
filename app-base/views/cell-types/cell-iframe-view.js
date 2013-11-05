@@ -126,7 +126,12 @@ module.exports = CellDefaultView.extend({
 		if ( this.active ) {
 			if (!this.model.isSticky()) {
 				console.log("deactivate iframe: " + this.cid);
-				this.$el.empty();
+				console.log(this);
+				//this.$el.empty();
+				// remove content and show info again
+				$('.content', this.$el).remove();
+				$('.info', this.$el).removeClass('element-hidden');
+
 				this.rendered = false;
 			} else {
 				var iframe = $('iframe', this.$el)[0];
