@@ -60,6 +60,10 @@ module.exports = CellDefaultView.extend({
 			});
 			
 		}).bind(this).defer();
+
+		this.$el.css({
+			'background-image' : 'none'
+		});
 	},
 
 	getTemplateData : function () {
@@ -131,6 +135,10 @@ module.exports = CellDefaultView.extend({
 				// remove content and show info again
 				$('.content', this.$el).remove();
 				$('.info', this.$el).removeClass('element-hidden');
+
+				this.$el.css({
+					'background-image': 'url('+this.model.getPosterImageURL()+')'
+				});
 
 				this.rendered = false;
 			} else {
