@@ -103,7 +103,7 @@ module.exports = CellDefaultView.extend({
 
 	activate : function () {
 		if ( !this.active ) {
-			console.log("activate iframe: " + this.cid);
+			// console.log("activate iframe: " + this.cid);
 
 			this.active = true; // needs to be before render(). why? don't know...
 
@@ -129,8 +129,7 @@ module.exports = CellDefaultView.extend({
 	deactivate : function () {
 		if ( this.active ) {
 			if (!this.model.isSticky()) {
-				console.log("deactivate iframe: " + this.cid);
-				console.log(this);
+				// console.log("deactivate iframe: " + this.cid);
 				//this.$el.empty();
 				// remove content and show info again
 				$('.content', this.$el).remove();
