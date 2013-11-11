@@ -3,6 +3,14 @@ BaseView = require('views/base/view');
 // see ```views/cell-types``` for per cell type views
 
 module.exports = BaseView.extend({
+	// attributes governing how a cell behaves in the view
+	// cell types have default values. can be overridden via fields
+	// these are the defaults use by most cell types
+	defaultViewAttributes : {
+		autoload : 1, // automatically open a cell on set load or scroll in?
+		sticky : 1, // close a cell on scroll out?
+		solo: 0 // close other cells on open?
+	},
 
 	events: {
 		click: function () {
@@ -21,6 +29,9 @@ module.exports = BaseView.extend({
 		} catch (e) {
 			// ignore, uses default template
 		}
+
+		// fill in missing view attributs with defaults
+		_.defaults(this.model.attributes, this.defaultViewAttributes);
 	},
 
 	autoRender : false,
@@ -38,7 +49,9 @@ module.exports = BaseView.extend({
 	},
 
 	render : function () {
-		
+		console.log("rendering");
+		console.log(this);
+
 		if ( this.active ) {
 			BaseView.prototype.render.apply(this,arguments);
 

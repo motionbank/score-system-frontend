@@ -19,6 +19,7 @@ module.exports = BaseModel.extend({
 
 	modeltype : 'cell',
 
+	// attributes that can't be overwritten in fields
 	lockedAttributes : {
 		type   : null,
 		sets   : null,
@@ -29,13 +30,17 @@ module.exports = BaseModel.extend({
 	},
 
 	// check if this cell has the sticky flag set
-	// TODO: using fields is not necessary. just use this.attributes.sticky with RegEx.test
-	isSticky : function() {
-		return _.any(this.attributes.fields, function(field) {
-			return ( field.name === 'sticky' && (field.value === 'true' || field.value === '1') );
-		});
+	// TODO: just use getFlag('sticky') instead
+	isSticky : function () {
+		return this.getFlag('sticky');
 	},
 
+	// checks if an attribute is present and either 'true' or '1'
+	getFlag : function (flag) {
+		return /true|1/i.test(this.get(flag));
+	},
+
+	// sets attributes and applies overrides set via fields
 	set : function ( opts ) {
 		// override some attributes per set<->cell connection
 		if ( opts && typeof opts === 'object' && 'fields' in opts ) {
