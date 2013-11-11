@@ -1,3 +1,4 @@
+/* cell-iframe-view.js */
 var CellDefaultView = require('views/cell-view'),
 	config 			= require('config/config'),
 	pm 				= require('postmessenger'),
@@ -71,11 +72,13 @@ module.exports = CellDefaultView.extend({
 		if ( Handlebars.compile && data['iframe-src'] ) {
 			data['iframe-src'] = Handlebars.compile(data['iframe-src'])(config);
 		}
-		var spl = data['iframe-src'].split('?');
-		data['iframe-src'] = spl[0] + '?' + 'domain=http://' + config.host + '&' + (spl[1] || '');
-		// if ( false === /^http[s]:\/\/.+/.test(data['iframe-src']) ) {
-		// 	data['iframe-src'] = 'http://' + config.host + config.baseUrl + data['iframe-src'];
-		// }
+		if ( data['iframe-src'] ) {
+			var spl = data['iframe-src'].split('?');
+			data['iframe-src'] = spl[0] + '?' + 'domain=http://' + config.host + '&' + (spl[1] || '');
+			// if ( false === /^http[s]:\/\/.+/.test(data['iframe-src']) ) {
+			// 	data['iframe-src'] = 'http://' + config.host + config.baseUrl + data['iframe-src'];
+			// }
+		}
 		
 		// collect attributes for <iframe>
 		data.attr = {};
