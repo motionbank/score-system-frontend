@@ -47,13 +47,16 @@ module.exports = CellDefaultView.extend({
 
 	render : function () {
 		CellDefaultView.prototype.render.apply(this,arguments);
-
+		
 		return this;
 	},
 
 	// render content
 	open : function () {
 		console.log("open " + this.cellInfo());
+
+		// show loading animation
+		this.showLoadingAnimation();
 
 		// load iframe from data-src
 		var $iframe = $('iframe',this.$el);
@@ -69,7 +72,7 @@ module.exports = CellDefaultView.extend({
 	// remove content
 	close : function () {
 		console.log("close " + this.cellInfo());
-
+		
 		var $iframe = $('iframe',this.$el);
 		$iframe.attr( 'src', '');
 		
@@ -95,4 +98,11 @@ module.exports = CellDefaultView.extend({
 			this.close();
 		}
 	},
+
+	showLoadingAnimation : function() {
+		$('.loading', this.$el).show(0);
+		$('iframe', this.$el).off('load').on('load', function() {
+			$('.loading', this.$el).hide(0);
+		});
+	}
 });
