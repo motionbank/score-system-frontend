@@ -1,3 +1,4 @@
+/* cell-vimeo-view.js */
 var CellIFrameView = require('views/cell-types/cell-iframe-view');
 
 module.exports = CellIFrameView.extend({

@@ -1,3 +1,4 @@
+/* cell-collection-view.js */
 var CellDefaultView = require('views/cell-view'),
 	BaseCollectionView = require('views/base/collection-view'),
 	mediator = require('mediator'),
@@ -21,6 +22,7 @@ module.exports = BaseCollectionView.extend({
 	},
 
 	render : function () {
+		console.log("rendering cell collection");
 		BaseCollectionView.prototype.render.apply(this,arguments);
 		// after rendring is finished attach scroll listener
 		_(function(){

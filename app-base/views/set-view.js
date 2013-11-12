@@ -80,8 +80,6 @@ module.exports = View.extend({
 		layAttrs.cell_width  = cell_width;
 		layAttrs.cell_height = cell_height;
 
-		console.log( this.layoutAttributes );
-
 		// add media-query style classes to cells
 		_.each( this.model.collectionView.getItemViews(), function( cellView ) {
 		var cellDim = cellView.model.get('extra');
