@@ -45,9 +45,35 @@ module.exports = CellDefaultView.extend({
 		});
 	},
 
+	getTemplateData : function () {
+		var data = CellDefaultView.prototype.getTemplateData.apply(this,arguments);
+		// TODO: check this again
+		if ( Handlebars.compile && data['iframe-src'] ) {
+			data['iframe-src'] = Handlebars.compile(data['iframe-src'])(config);
+		}
+		if ( data['iframe-src'] ) {
+			var spl = data['iframe-src'].split('?');
+			data['iframe-src'] = spl[0] + '?' + 'domain=http://' + config.host + '&' + (spl[1] || '');
+			// if ( false === /^http[s]:\/\/.+/.test(data['iframe-src']) ) {
+			// 	data['iframe-src'] = 'http://' + config.host + config.baseUrl + data['iframe-src'];
+			// }
+		}
+		
+		// collect extra attributes for <iframe>
+		data.attr = {};
+		_.each(data.fields, function(element, index, list) {
+			if (element.name.substr(0,5) == 'attr-') {
+				var attrName = element.name.substr(5);
+				data.attr[attrName] = element.value;
+			}
+		});
+		
+		return data;
+	},
+
 	render : function () {
 		CellDefaultView.prototype.render.apply(this,arguments);
-		
+
 		return this;
 	},
 
