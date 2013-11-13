@@ -236,4 +236,5 @@
 .loading .dot3 { -webkit-animation: fadeOut 0.7s 0.70s infinite alternate; animation: fadeOut 0.7s 0.70s infinite alternate; }
 @-webkit-keyframes fadeOut { from {opacity:1;} to {opacity:0;} }
 @keyframes fadeOut { from {opacity:1;} to {opacity:0;} }
+.cell .content { position:relative; } /* so .loading doesn't overlay it */
 
