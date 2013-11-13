@@ -6,8 +6,8 @@ module.exports = CellIFrameView.extend({
 	// cell types have default values. can be overridden via fields
 	// these are the defaults use by most cell types
 	defaultViewAttributes : {
-		autoload : 0, // automatically open a cell on set load or scroll in?
-		sticky : 0, // close a cell on scroll out?
+		autoload : 0, // open on scroll in?
+		sticky : 0, // don't close on scroll out?
 		solo: 1 // close other cells on open?
 	},
 

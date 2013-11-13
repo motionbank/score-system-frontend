@@ -38,7 +38,7 @@ module.exports = BaseView.extend({
 	},
 
 	render : function () {
-		console.log("rendering " + this.cellInfo());
+		//console.log("rendering " + this.cellInfo());
 		// if ( this.active ) {
 		BaseView.prototype.render.apply(this,arguments);
 

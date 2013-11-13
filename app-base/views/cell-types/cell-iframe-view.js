@@ -9,14 +9,14 @@ module.exports = CellDefaultView.extend({
 	// cell types have default values. can be overridden via fields
 	// these are the defaults use by most cell types
 	defaultViewAttributes : {
-		autoload : 1, // automatically open on scroll in?
-		sticky : 0, // close a cell on scroll out?
+		autoload : 1, // open on scroll in?
+		sticky : 0, // don't close on scroll out?
 		solo: 0 // close other cells on open?
 	},
 
 	events : {
 		'click' : function () {
-			console.log("click"); 
+			// console.log("click"); 
 			if ( !this.isOpen ) {
 				this.open();
 
@@ -47,16 +47,13 @@ module.exports = CellDefaultView.extend({
 
 	getTemplateData : function () {
 		var data = CellDefaultView.prototype.getTemplateData.apply(this,arguments);
-		// TODO: check this again
+
 		if ( Handlebars.compile && data['iframe-src'] ) {
 			data['iframe-src'] = Handlebars.compile(data['iframe-src'])(config);
 		}
 		if ( data['iframe-src'] ) {
 			var spl = data['iframe-src'].split('?');
 			data['iframe-src'] = spl[0] + '?' + 'domain=http://' + config.host + '&' + (spl[1] || '');
-			// if ( false === /^http[s]:\/\/.+/.test(data['iframe-src']) ) {
-			// 	data['iframe-src'] = 'http://' + config.host + config.baseUrl + data['iframe-src'];
-			// }
 		}
 		
 		// collect extra attributes for <iframe>
@@ -73,7 +70,10 @@ module.exports = CellDefaultView.extend({
 
 	render : function () {
 		CellDefaultView.prototype.render.apply(this,arguments);
-
+		
+		// when rendering is finished, meaning the <iframe> exists, connect postmessenger
+		_(this.connectPM).bind(this).defer();
+		
 		return this;
 	},
 
@@ -86,13 +86,13 @@ module.exports = CellDefaultView.extend({
 
 		// load iframe from data-src
 		var $iframe = $('iframe',this.$el);
+		var that = this;
+		$iframe.one('load.open', function() { that.isOpen = true; }); // once loaded, set isOpen flag
 		$iframe.attr( 'src', $iframe.data('src') );
 		
 		$('.content',this.$el).removeClass('element-hidden');
 		$('.info',this.$el).addClass('element-hidden');
 		this.$el.css( 'background-image', 'none' );
-
-		this.isOpen = true;
 	},
 
 	// remove content
@@ -100,6 +100,7 @@ module.exports = CellDefaultView.extend({
 		console.log("close " + this.cellInfo());
 		
 		var $iframe = $('iframe',this.$el);
+		$iframe.off('.open'); // don't set isOpen anymore, if pending
 		$iframe.attr( 'src', '');
 		
 		$('.content',this.$el).addClass('element-hidden');
@@ -112,8 +113,13 @@ module.exports = CellDefaultView.extend({
 	// called when scrolled into view 
 	activate : function () {
 		// console.log( "activate " + this.model.get('type') + this.model.get('connection_id') );
-		if ( this.model.getFlag('autoload') ) {
+		if ( this.model.getFlag('autoload') && !this.isOpen ) {
 			this.open();
+		}
+		
+		if ( this.model.getFlag('sticky') && this.isOpen ) {
+			// console.log("sending activate");
+			this.sendPM('activate!');
 		}
 	},
 
@@ -123,12 +129,65 @@ module.exports = CellDefaultView.extend({
 		if ( !this.model.getFlag('sticky') ) {
 			this.close();
 		}
+
+		if ( this.model.getFlag('sticky') && this.isOpen ) {
+			// console.log("sending deactivate");
+			this.sendPM('deactivate!');
+		}
 	},
 
-	showLoadingAnimation : function() {
+	showLoadingAnimation : function () {
 		$('.loading', this.$el).show(0);
-		$('iframe', this.$el).off('load').on('load', function() {
-			$('.loading', this.$el).hide(0);
+		var that = this;
+		$('iframe', this.$el).one('load', function() {
+			$('.loading', that.$el).hide(0);
 		});
+	},
+
+	// connect postmessenger to iframe
+	// remains on the iframe and reconnects on load, so only call this once
+	connectPM : function () {
+		// console.log("connectPM " + this.cellInfo());
+		
+		var that = this;
+		$('iframe', this.$el).on('load', function() {
+			// load event is also fired on close, when src is set to "". skip this.
+			if (!this.src) {
+				// console.log("src not valid: " + this.src);
+				return;
+			}
+
+			// if iframe on another domain add that to the accept list
+			var src = that.model.get('iframe-src');
+			if ( /^http[s]?:\/\/.+/.test(src) ) {
+				var iframe_domain = (function(){
+					var p = src.split('/');
+					return p[0]+'//'+p[2];
+				})();
+				pm.accept(iframe_domain);
+			}
+			// connect it
+			pm.send(
+				'connect?',
+				{ listener_id: hasher.generate(20) }, 
+				this.contentWindow,
+				iframe_domain
+			);
+		});
+	},
+	
+	sendPM : function (msg, opts) {
+		var iframe = $('iframe', this.$el)[0];
+		if (opts == undefined) { opts = {}; }
+
+		if (this.isOpen) {
+			// console.log("sending " + msg);
+			pm.send(msg, opts, iframe.contentWindow );
+		} else { // wait till iframe is loaded to send message
+			$(iframe).one('load', function() {
+				// console.log("late sending " + msg);
+				pm.send(msg, opts, this.contentWindow );
+			});
+		}
 	}
 });
