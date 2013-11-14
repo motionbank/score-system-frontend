@@ -56,6 +56,15 @@ module.exports = BaseCollectionView.extend({
 		}
 		
 		return cellView;
+	},
+
+	// scroll to a cell
+	scrollToCell : function (cellid, time) {
+		if (cellid == undefined) return;
+		var cellView = _.find(this.subviews, function(cellView) {
+			return cellView.model.id == cellid;
+		});
+		if (cellView) cellView.scrollTo(time);
 	}
 
 });
