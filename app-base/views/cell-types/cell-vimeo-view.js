@@ -25,7 +25,7 @@ module.exports = CellIFrameView.extend({
 		this.subscribeEvent('!open', function(args) {
 			if ( args.origin == this ) { return; }
 			//console.log("open received for: " + args.cellid);
-			if ( args.cellid == this.model.get('connection_id') ) { this.open(); }
+			if ( args.cellid == this.model.get('connection_id') ) { this.scrollTo(); this.open();  }
 		});
 	},
 
