@@ -17,10 +17,24 @@ module.exports = CellDefaultView.extend({
 	events : {
 		'click' : function () {
 			// console.log("click"); 
-			if ( !this.isOpen ) {
+			if ( !this.isOpen() ) {
 				this.open();
 			}
 		}
+	},
+
+	loadState : "closed",
+
+	isOpen : function() {
+		return this.loadState.toLowerCase() == "open";
+	},
+
+	isClosed : function() {
+		return this.loadState.toLowerCase() == "closed";
+	},
+
+	isLoading : function() {
+		return this.loadState.toLowerCase() == "loading";
 	},
 
 	initialize : function () {
@@ -34,7 +48,10 @@ module.exports = CellDefaultView.extend({
 			// console.log(args);
 			// skip if we sent that event
 			if ( args.origin == this ) { return; }
-			if ( args.group == this.model.get('solo') ) { this.close(); }
+			if ( args.group == this.model.get('solo') ) { 
+				// close if open or loading
+				if (!this.isClosed()) this.close(); 
+			}
 		});
 	},
 
@@ -73,6 +90,7 @@ module.exports = CellDefaultView.extend({
 	// render content
 	open : function () {
 		console.log("open " + this.cellInfo());
+		this.loadState = "loading";
 
 		// show loading animation
 		this.showLoadingAnimation();
@@ -80,7 +98,7 @@ module.exports = CellDefaultView.extend({
 		// load iframe from data-src
 		var $iframe = $('iframe',this.$el);
 		var that = this;
-		$iframe.one('load.open', function() { that.isOpen = true; }); // once loaded, set isOpen flag
+		$iframe.one('load.open', function() { that.loadState = "open"; }); // once loaded, set isOpen flag
 		$iframe.attr( 'src', $iframe.data('src') );
 		
 		$('.content',this.$el).removeClass('element-hidden');
@@ -99,26 +117,26 @@ module.exports = CellDefaultView.extend({
 	// remove content
 	close : function () {
 		console.log("close " + this.cellInfo());
+		// debugger;
+		this.$el.css( 'background-image', 'url('+this.model.getPosterImageURL()+')' ); // show poster image
+		$('.info',this.$el).removeClass('element-hidden'); // show info
+		$('.content',this.$el).addClass('element-hidden'); // hide content
 		
 		var $iframe = $('iframe',this.$el);
 		$iframe.off('.open'); // don't set isOpen anymore, if pending
 		$iframe.attr( 'src', '');
-		
-		$('.content',this.$el).addClass('element-hidden');
-		$('.info',this.$el).removeClass('element-hidden');
-		this.$el.css( 'background-image', 'url('+this.model.getPosterImageURL()+')' );
 
-		this.isOpen = false;
+		this.loadState = "closed";
 	},
 
 	// called when scrolled into view 
 	activate : function () {
 		// console.log( "activate " + this.model.get('type') + this.model.get('connection_id') );
-		if ( this.model.getFlag('autoload') && !this.isOpen ) {
+		if ( this.model.getFlag('autoload') && !this.isOpen() ) {
 			this.open();
 		}
 		
-		if ( this.model.getFlag('sticky') && this.isOpen ) {
+		if ( this.model.getFlag('sticky') && this.isOpen() ) {
 			// console.log("sending activate");
 			this.sendPM('activate!');
 		}
@@ -131,7 +149,7 @@ module.exports = CellDefaultView.extend({
 			this.close();
 		}
 
-		if ( this.model.getFlag('sticky') && this.isOpen ) {
+		if ( this.model.getFlag('sticky') && this.isOpen() ) {
 			// console.log("sending deactivate");
 			this.sendPM('deactivate!');
 		}
@@ -181,7 +199,7 @@ module.exports = CellDefaultView.extend({
 		var iframe = $('iframe', this.$el)[0];
 		if (opts == undefined) { opts = {}; }
 
-		if (this.isOpen) {
+		if (this.isOpen()) {
 			// console.log("sending " + msg);
 			pm.send(msg, opts, iframe.contentWindow );
 		} else { // wait till iframe is loaded to send message
