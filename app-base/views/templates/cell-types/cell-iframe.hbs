@@ -1,10 +1,10 @@
-<div class="loading" style="display:none;"><span class="dot1"></span> <span class="dot2"></span> <span class="dot3"></span></div>
-<div class="content element-hidden">
-	<iframe src="" data-src="{{iframe-src}}" 
-			{{#each attr}}{{@key}}="{{this}}" {{/each}}>
-	</iframe>
-</div>
 <div class="info">
 	<h1 class="title">{{{title}}}</h1>
 	<div class="description">{{description}}</div>
+</div>
+<div class="content element-hidden">
+	<iframe src="" 
+			data-src="{{iframe-src}}" 
+			{{#each attr}}{{@key}}="{{this}}" {{/each}}>
+			</iframe>
 </div>
