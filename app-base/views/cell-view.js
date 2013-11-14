@@ -45,6 +45,7 @@ module.exports = BaseView.extend({
 		// add classes (cell type, cell id)
 		this.$el.addClass( 'type-' + this.model.get('type') );
 		this.$el.addClass( 'cellid-' + this.model.get('connection_id') ); // add view id as class (viewXX) to make debugging easier
+		this.$el.data('cellid', this.model.get('connection_id'));
 
 		// add css from "css-"-fields
 		var cssOpts = {
