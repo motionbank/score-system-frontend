@@ -58,7 +58,8 @@ module.exports = CellIFrameView.extend({
 					//console.log(iframe);
 					var onfinish = that.model.get('on-finish');
 					if (onfinish) {
-						that.publishEvent('!open', {cellid : onfinish, origin : that});
+						var random = _.sample( onfinish.split('/') );
+						that.publishEvent('!open', {cellid : random, origin : that});
 					}
 				}
 			},
