@@ -19,13 +19,6 @@ module.exports = CellDefaultView.extend({
 			// console.log("click"); 
 			if ( !this.isOpen ) {
 				this.open();
-
-				// console.log("solo " + this.model.get('solo'));
-				if ( this.model.getFlag('solo') ) {
-					var soloGroup = this.model.get('solo');
-					// console.log('publish solo ' + soloGroup);
-					this.publishEvent('!solo', { group : soloGroup, origin : this });
-				}
 			}
 		}
 	},
@@ -93,6 +86,14 @@ module.exports = CellDefaultView.extend({
 		$('.content',this.$el).removeClass('element-hidden');
 		$('.info',this.$el).addClass('element-hidden');
 		this.$el.css( 'background-image', 'none' );
+
+		// handle solo
+		// console.log("solo " + this.model.get('solo'));
+		if ( this.model.getFlag('solo') ) {
+			var soloGroup = this.model.get('solo');
+			// console.log('publish solo ' + soloGroup);
+			this.publishEvent('!solo', { group : soloGroup, origin : this });
+		}
 	},
 
 	// remove content
