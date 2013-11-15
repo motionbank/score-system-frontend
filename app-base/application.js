@@ -1,5 +1,6 @@
 /* application.js */
-var config = require('config/config'),
+var ErrorView = require('views/error-view'),
+	config = require('config/config'),
 	defaultSets = null,
 	defaultSetsById = null,
 	defaultSetsByUrl = null,
@@ -71,7 +72,9 @@ module.exports = Chaplin.Application.extend({
 						} else if ( setPathOrId in defaultSetsById ) {
 							cbSucc( setPathOrId );
 						} else {
-							showError( 'Error loading sets' );
+							new ErrorView({ 
+								message : 'Couldn\'t get the set you requested. (' + setPathOrId.replace(/[^-a-z0-9]/ig,'-') + ')' 
+							});
 						}
 					});
 				}
