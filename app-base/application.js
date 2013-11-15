@@ -1,33 +1,34 @@
 /* application.js */
 var config = require('config/config'),
 	defaultSets = null,
+	defaultSetsById = null,
 	defaultSetsByUrl = null,
 	//pieceMaker = null,
 	dispatcher = require('dispatcher');
 
+// show "loading..."
+var showLoading = function() {
+	$('#portal .enter').addClass('hidden');
+	$('#portal .loading').removeClass('hidden');
+	$('#cover h1 a').attr('href', '#');
+};
+
+// show error
+var showError = function(msg) {
+	$('#portal .loading').addClass('hidden');
+	$('#portal .error').html(msg).fadeIn(1000);
+};
+
+// show "Enter site" link
+var showEnter = function() {
+	$('#portal .loading').addClass('hidden');
+	var enter = $('#portal .enter').fadeIn(1000);
+	// put link on title too
+	$('#cover h1 a').attr('href', enter.find('a').attr('href'));
+};
+
 var loadUserSets = function loadUserSets ( user_id, next ) {
 	next = next || function(){};
-	
-	// show "loading..."
-	var showLoading = function() {
-		$('#portal .enter').addClass('hidden');
-		$('#portal .loading').removeClass('hidden');
-		$('#cover h1 a').attr('href', '#');
-	},
-
-	// show error
-	showError = function(msg) {
-		$('#portal .loading').addClass('hidden');
-		$('#portal .error').html(msg).fadeIn(1000);
-	},
-
-	// show "Enter site" link
-	showEnter = function() {
-		$('#portal .loading').addClass('hidden');
-		var enter = $('#portal .enter').fadeIn(1000);
-		// put link on title too
-		$('#cover h1 a').attr('href', enter.find('a').attr('href'));
-	};
 
 	showLoading();
 	
@@ -53,11 +54,46 @@ var loadUserSets = function loadUserSets ( user_id, next ) {
 }
 
 module.exports = Chaplin.Application.extend({
+
 	initialize : function ( options ) {
 
-		// call super()
+		this.subscribeEvent( '!app:get-set-id-for-path',
+			function( setPathOrId, cbSucc, cbErr){
+				if ( defaultSetsByUrl && setPathOrId in defaultSetsByUrl ) {
+					cbSucc( defaultSetsByUrl[setPathOrId].id );
+				} else if ( defaultSetsById && setPathOrId in defaultSetsById ) {
+					cbSucc( setPathOrId );
+				} else {
+					loadUserSets(1, function(){
+						setsLoadedCallback.apply(this,arguments);
+						if ( setPathOrId in defaultSetsByUrl ) {
+							cbSucc( defaultSetsByUrl[setPathOrId].id );
+						} else if ( setPathOrId in defaultSetsById ) {
+							cbSucc( setPathOrId );
+						} else {
+							showError( 'Error loading sets' );
+						}
+					});
+				}
+		});
+
 		Chaplin.Application.prototype.initialize.apply(this,arguments);
-		
+
+		var setsLoadedCallback = function setsLoadedCallback (err, sets) {
+			if ( !err ) {
+				defaultSets = [];
+				defaultSetsByUrl = {};
+				defaultSetsById = {};
+				_.each(sets, function(set) {
+					defaultSets.push( set );
+					defaultSetsById[set.id] = set;
+					defaultSetsByUrl[set.path] = set;
+				});
+			}
+		};
+
+		loadUserSets(1, setsLoadedCallback);
+
 		// // initialize PieceMaker API client
 		// pieceMaker = new PieceMakerApi({
 		// 	piecemakerError : function () {
@@ -74,37 +110,6 @@ module.exports = Chaplin.Application.extend({
 		// pieceMaker.listUsers(function(){
 		// 	console.log( arguments );
 		// });
-		
-		console.log('app initialize');
-
-		loadUserSets(1, function(err, sets){
-			console.log('got set list', sets);
-
-			if ( !err ) {
-				defaultSets = [];
-				defaultSetsByUrl = {};
-				_.each(sets, function(set) {
-					defaultSets.push( set );
-					defaultSetsByUrl[set.path] = set;
-				});
-			}
-		});
-
-		// subscribe to some events
-		console.log("subscribe to event");
-		this.subscribeEvent( '!app:get-set-id-for-path',
-			function( setpath, cbSucc, cbErr){
-
-
-				console.log("got set id", arguments);
-
-				if ( defaultSetsByUrl && setpath in defaultSetsByUrl ) {
-					cbSucc( defaultSetsByUrl[setpath].id );
-				} else {
-					console.log("no set path");
-					cbSucc( null );
-				}
-		});
 
 		var self = this;
 		$(window).resize(function(){

@@ -39,11 +39,12 @@ module.exports = BaseModel.extend({
 
   			console.log('send event to get id from path: ' + set_id );
 
-			//this.publishEvent('!app:get-set-id-for-path', set_id, function(sid) {
-				var sid = set_id;
+			this.publishEvent('!app:get-set-id-for-path', set_id, function(sid) {
+
 				console.log("getting set:", set_id, sid);
 
 	  			jQuery.ajax({
+	  				
 					url: 'http://' + config.apiHost + '/' + config.apiBaseUrl + '/sets/' + sid + '.json',
 					dataType:'json',
 					success: function (data) {
@@ -82,9 +83,9 @@ module.exports = BaseModel.extend({
 					context: self
 				});
 
-			// },function( err ){
-			// 	throw( err );
-			// });
+			},function( err ){
+				throw( err );
+			});
   		}
   	},
 
