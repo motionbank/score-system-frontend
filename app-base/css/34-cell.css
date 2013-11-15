@@ -228,3 +228,13 @@
 .cell-collection .cell.type-text .info {
 	display: none;
 }*/
+.cell .loading { color:white; position:absolute; top:0;left:0;bottom:0;right:0; font-size:200%; text-align:center; vertical-align: middle; line-height:100%;}
+.cell .loading span { display:inline-block; margin-top:30%; }
+.cell .loading span:after { content:'•'; }
+.cell .loading .dot1 { -webkit-animation: fadeOut 0.7s 0.00s infinite alternate; animation: fadeOut 0.7s 0.00s infinite alternate; }
+.cell .loading .dot2 { -webkit-animation: fadeOut 0.7s 0.35s infinite alternate; animation: fadeOut 0.7s 0.35s infinite alternate; }
+.cell .loading .dot3 { -webkit-animation: fadeOut 0.7s 0.70s infinite alternate; animation: fadeOut 0.7s 0.70s infinite alternate; }
+@-webkit-keyframes fadeOut { from {opacity:1;} to {opacity:0;} }
+@keyframes fadeOut { from {opacity:1;} to {opacity:0;} }
+.cell .content { position:relative; } /* so .loading doesn't overlay it */
+

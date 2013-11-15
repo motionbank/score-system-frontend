@@ -47,9 +47,7 @@ var loadUserSets = function loadUserSets ( user_id, next ) {
 			//next.apply(null,arguments);
 			showError('Error loading sets' + (textStatus ? ': ' + textStatus + ' (' + jqXHR.status + ')' : '') );
 		},
-		complete: function() {
-			console.log(arguments);
-		}
+		timeout: 10000
 	});
 }
 

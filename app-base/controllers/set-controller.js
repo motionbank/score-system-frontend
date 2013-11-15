@@ -3,29 +3,71 @@ var Controller = require('controllers/base/controller'),
     SetModel   = require('models/set-model'),
     ErrorView    = require('views/error-view');
 
+var current_opts = prev_opts = {}; // hack this sh*t
+
 module.exports = Controller.extend({
 
 	show : function ( opts ) {
-		
-		this.model = new SetModel();
+		// console.log("set#show", opts.setid, opts.cellid);
 
-		this.model.fetch({
-			id : opts.setid,
+		prev_opts = current_opts;
+		current_opts = opts;
 
-			error : function(model, response, options) {
-				//Chaplin.helpers.redirectTo('error#show', {message: 'Error message'}); // use this to redirect to an error page (changes url)
-				new ErrorView( {message : 'Couldn\'t get the set you requested. (' + response.status + ')'} );
+		this.compose('set', {
+			compose : function() {
+				// console.log("composing");
+
+				// create set model
+				this.model = new SetModel();
+
+				// create set view
+				this.view = new SetView({
+					region: 'content',
+					model: this.model
+				});
+				
+				this.model.fetch({
+					id : opts.setid,
+
+					error : function(model, response, options) {
+						//Chaplin.helpers.redirectTo('error#show', {message: 'Error message'}); // use this to redirect to an error page (changes url)
+						new ErrorView( {message : 'Couldn\'t get the set you requested. (' + response.status + ')'} );
+					}
+				});
+
+				this.model.synced(function(){
+					this.view.render();
+
+					// scroll (jump) to cellid
+					_(function() {
+						if (current_opts.cellid) {
+							this.model.collectionView.scrollToCell(current_opts.cellid, 0);
+						}
+					}).bind(this).defer();
+				}, this);
+			},
+
+			check : function() {
+				// differnet set -> reload
+				if ( current_opts.setid != prev_opts.setid ) {
+					return false; //rerun compose()
+				}
+
+				// same set, but removed cell id -> reload
+				if ( current_opts.cellid == undefined && current_opts.setid == prev_opts.setid ) {
+					return false; //rerun compose()
+				}
+
+				// same set, cell id given -> scroll to cell
+				if (current_opts.cellid) {
+					this.model.collectionView.scrollToCell(current_opts.cellid, 0);
+				}
+
+				return true;  // don't rerun compose()
 			}
+
 		});
 
-		this.model.synced(function(){
-			setView.render();
-		});
-		
-		var setView = this.view = new SetView({
-			region: 'content',
-			model: this.model
-		});
 	}
 
 });
