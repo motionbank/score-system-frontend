@@ -82,7 +82,7 @@ module.exports = View.extend({
 
 		// add media-query style classes to cells
 		_.each( this.model.collectionView.getItemViews(), function( cellView ) {
-		var cellDim = cellView.model.get('extra');
+			var cellDim = cellView.model.getDimensions();
 			cellView.$el.attr( 'class', cellView.$el.attr('class').replace(/ cell-(width|height)-[0-9]+/ig,'') );
 			// console.log('cell-width-'+ (parseInt((layAttrs.cell_width*cellDim.width) /50)*50));
 			cellView.$el.addClass( 'cell-width-'+ (parseInt((layAttrs.cell_width*cellDim.width) /50)*50) );
@@ -101,7 +101,7 @@ module.exports = View.extend({
 		var ch = 100.0/this.layoutAttributes.visible_y; // cell height (% of set)
 
 		_.each( this.model.collectionView.getItemViews(), function( cellView ) {
-			var cellDim = cellView.model.get('extra');
+			var cellDim = cellView.model.getDimensions();
 
 			var left  = cw * cellDim.x;
 			var width = cw * cellDim.width;
@@ -124,7 +124,7 @@ module.exports = View.extend({
 		var layAttrs = this.layoutAttributes;
 
 		_.each( this.model.collectionView.getItemViews(), function( cellView ) {
-			var cellDim = cellView.model.get('extra');
+			var cellDim = cellView.model.getDimensions();
 			// ... not too far left or right
 			if ( !( (cellDim.x + (cellDim.width-1)) < xFrom - 1 ||
 					 cellDim.x > xFrom + layAttrs.visible_x + 1 ) 

@@ -1,3 +1,4 @@
+/* application.js */
 var config = require('config/config'),
 	defaultSets = null,
 	defaultSetsByUrl = null,
@@ -31,7 +32,7 @@ var loadUserSets = function loadUserSets ( user_id, next ) {
 	showLoading();
 	
 	jQuery.ajax({
-		url: 'http://' + config.apiHost + '/users/'+user_id+'/sets',
+		url: 'http://' + config.apiHost + '/' + config.apiBaseUrl + '/sets.json',
 		//url: 'http://localhost:3331/', // test faulty data
 		//url: 'http://xnxnxnx.cmxmmxm', // test url not found
 		dataType: 'json',
@@ -73,12 +74,16 @@ module.exports = Chaplin.Application.extend({
 		// pieceMaker.listUsers(function(){
 		// 	console.log( arguments );
 		// });
+		
+		console.log('app initialize');
 
-		loadUserSets(1,function(err,userWithSets){
+		loadUserSets(1, function(err, sets){
+			console.log('got set list', sets);
+
 			if ( !err ) {
 				defaultSets = [];
 				defaultSetsByUrl = {};
-				_.each(userWithSets.sets, function(set){
+				_.each(sets, function(set) {
 					defaultSets.push( set );
 					defaultSetsByUrl[set.path] = set;
 				});
@@ -86,10 +91,18 @@ module.exports = Chaplin.Application.extend({
 		});
 
 		// subscribe to some events
+		console.log("subscribe to event");
 		this.subscribeEvent( '!app:get-set-id-for-path',
-			function( setpath, cbSucc,cbErr){
+			function( setpath, cbSucc, cbErr){
+
+
+				console.log("got set id", arguments);
+
 				if ( defaultSetsByUrl && setpath in defaultSetsByUrl ) {
 					cbSucc( defaultSetsByUrl[setpath].id );
+				} else {
+					console.log("no set path");
+					cbSucc( null );
 				}
 		});
 

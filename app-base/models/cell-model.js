@@ -3,7 +3,7 @@ var BaseModel = require('models/base/model'),
 
 module.exports = BaseModel.extend({
 
-	idAttribute : 'connection_id', // cells are overriden per connection, so make this the "id"
+	idAttribute : 'id',
 
 	defaults : {
 		title 		: 'Missing Title Here',
@@ -12,7 +12,7 @@ module.exports = BaseModel.extend({
 		poster 		: null,
 		sets 		: [], // sets it belongs to ... really?
 		extra 		: {} // per connection settings: x,y,width,height
-		// each field in ```fields``` [] will be mapped to 
+		// each field in ```additional_fields``` [] will be mapped to 
 		// ```field_key : field_value```
 		// overriding the default values on the way ...
 	},
@@ -23,10 +23,10 @@ module.exports = BaseModel.extend({
 	lockedAttributes : {
 		type   : null,
 		sets   : null,
-		extra  : null,
-		fields : null,
-		id 	   : null,
-		connection_id : null
+		//extra  : null,
+		additional_fields : null,
+		id 	   : null
+		//connection_id : null
 	},
 
 	// check if this cell has the sticky flag set
@@ -41,12 +41,12 @@ module.exports = BaseModel.extend({
 	},
 
 	// sets attributes and applies overrides set via fields
-	set : function ( opts ) {
+	set : function ( opts ){
 		// override some attributes per set<->cell connection
-		if ( opts && typeof opts === 'object' && 'fields' in opts ) {
-			_.each( opts.fields, function(field){
-				if ( field && field.value && field.name && !( field.name in this.lockedAttributes ) ) {
-					opts[field.name] = field.value;
+		if ( opts && typeof opts === 'object' && 'additional_fields' in opts ) {
+			_.each( opts.additional_fields, function(value, name){
+				if ( value && name && !( name in this.lockedAttributes ) ) {
+					opts[name] = value;
 				}
 			}, this);
 			BaseModel.prototype.set.apply(this,[opts]);
@@ -64,6 +64,36 @@ module.exports = BaseModel.extend({
 				'cells'+
 				'/poster/full/' +
 				this.get('poster');
+	},
+
+	getDimensions : function ()  {
+		//return this.get('extra'); // old backend
+		return {
+			x : this.get('x'),
+			y : this.get('y'),
+			width : this.get('width'),
+			height : this.get('height')
+		};
+	},
+
+	getID : function () {
+		//return this.get('connection_id'); // old backend
+		return this.get('id');
+	},
+
+	// get all attributes with a certain prefix
+	// returned keys are without the prefix
+	getPrefixAttributes : function (prefix) {
+		attribs = {};
+		if (prefix) {
+			var rx = new RegExp('^' + prefix, 'i');
+			_.each(this.attributes, function(value, name) {
+				if ( rx.test(name) ) {
+					attribs[name.replace(rx, '')] = value;
+				}
+			});
+		}
+		return attribs;
 	}
 
 });
