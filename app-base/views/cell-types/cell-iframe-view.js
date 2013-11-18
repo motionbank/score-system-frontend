@@ -57,7 +57,7 @@ module.exports = CellDefaultView.extend({
 
 	getTemplateData : function () {
 		var data = CellDefaultView.prototype.getTemplateData.apply(this,arguments);
-
+		
 		if ( Handlebars.compile && data['iframe-src'] ) {
 			data['iframe-src'] = Handlebars.compile(data['iframe-src'])(config);
 		}
@@ -67,13 +67,7 @@ module.exports = CellDefaultView.extend({
 		}
 		
 		// collect extra attributes for <iframe>
-		data.attr = {};
-		_.each(data.fields, function(element, index, list) {
-			if (element.name.substr(0,5) == 'attr-') {
-				var attrName = element.name.substr(5);
-				data.attr[attrName] = element.value;
-			}
-		});
+		data.attr = this.model.getPrefixAttributes('attr-');
 		
 		return data;
 	},
@@ -131,7 +125,6 @@ module.exports = CellDefaultView.extend({
 
 	// called when scrolled into view 
 	activate : function () {
-		// console.log( "activate " + this.model.get('type') + this.model.get('connection_id') );
 		if ( this.model.getFlag('autoload') && !this.isOpen() ) {
 			this.open();
 		}
@@ -144,7 +137,6 @@ module.exports = CellDefaultView.extend({
 
 	// called when scrolled out of view
 	deactivate : function () {
-		// console.log( "deactivate " + this.model.get('type') + this.model.get('connection_id') );
 		if ( !this.model.getFlag('sticky') ) {
 			this.close();
 		}

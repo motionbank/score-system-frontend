@@ -44,39 +44,32 @@ module.exports = BaseView.extend({
 
 		// add classes (cell type, cell id)
 		this.$el.addClass( 'type-' + this.model.get('type') );
-		this.$el.addClass( 'cellid-' + this.model.get('connection_id') ); // add view id as class (viewXX) to make debugging easier
-		this.$el.data('cellid', this.model.get('connection_id'));
+		this.$el.addClass( 'cellid-' + this.model.getID() ); // add view id as class (viewXX) to make debugging easier
+		this.$el.data( 'cellid', this.model.getID() );
 
-		// add css from "css-"-fields
 		var cssOpts = {
 			'background-image': 'url('+this.model.getPosterImageURL()+')'
 		};
-		attribs = {};
-		_.filter(this.model.attributes.fields,function(f){
-			return /^css-/i.test(f.name);
-		}).map(function(f){
-			attribs[f.name.replace(/^css-/i,'')] = f.value;
-		});
-		cssOpts = _.extend(cssOpts,attribs);
+		// add css from "css-" fields
+		cssOpts = _.extend( cssOpts, this.model.getPrefixAttributes('css-') );
 		this.$el.css(cssOpts);
-		// }
 
 		return this;
 	},
 
 	// get a string made up of cell type + id
 	cellInfo : function () {
-		return this.model.get('type') + this.model.get('connection_id');
+		return this.model.get('type') + this.model.getID();
 	},
 	
 	// called when scrolled into view 
 	activate : function () {
-		// console.log( "activate " + this.model.get('type') + this.model.get('connection_id') );
+		// console.log( "activate " + this.cellInfo() );
 	},
 
 	// called when scrolled out of view
 	deactivate : function () {
-		// console.log( "deactivate " + this.model.get('type') + this.model.get('connection_id') );
+		// console.log( "deactivate " + this.cellInfo() );
 	},
 
 	// smoothly scroll to this cell

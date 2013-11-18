@@ -8,14 +8,16 @@ var current_opts = prev_opts = {}; // hack this sh*t
 module.exports = Controller.extend({
 
 	show : function ( opts ) {
-		// console.log("set#show", opts.setid, opts.cellid);
+		console.log("set#show", opts.setid, opts.cellid);
+
+		// get setid from path
 
 		prev_opts = current_opts;
 		current_opts = opts;
 
 		this.compose('set', {
 			compose : function() {
-				// console.log("composing");
+				console.log("set compose");
 
 				// create set model
 				this.model = new SetModel();
@@ -48,6 +50,7 @@ module.exports = Controller.extend({
 			},
 
 			check : function() {
+				console.log("set check");
 				// differnet set -> reload
 				if ( current_opts.setid != prev_opts.setid ) {
 					return false; //rerun compose()
@@ -60,7 +63,9 @@ module.exports = Controller.extend({
 
 				// same set, cell id given -> scroll to cell
 				if (current_opts.cellid) {
-					this.model.collectionView.scrollToCell(current_opts.cellid, 0);
+					if ( this.model.collectionView ) {
+						this.model.collectionView.scrollToCell(current_opts.cellid, 0);
+					}
 				}
 
 				return true;  // don't rerun compose()

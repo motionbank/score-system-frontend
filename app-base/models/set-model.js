@@ -1,3 +1,4 @@
+/* set-model.js */
 var BaseModel 	   = require('models/base/model'),
 	CellModel 	   = require('models/cell-model'),
 	CellView 	   = require('views/cell-view'),
@@ -34,43 +35,56 @@ module.exports = BaseModel.extend({
   			var set_id = this.get('id') || opts.id || null;
   			if ( !set_id ) { throw('No set id given!') }
 
-  			jQuery.ajax({
-				url: 'http://' + config.apiHost + '/sets/' + set_id,
-				dataType:'json',
-				success: function (data) {
-					
-					// set model from received data
-					this.set(data);
+  			var self = this;
 
-					// handle cells as collection
-					var cells = [];
-					_.each(data.cells,function(cell){
-						cell.connection_id = cell.extra.connection_id;
-						cells.push(cell);
-					});
-					var cellCollection = new CellCollection(cells);
+  			console.log('send event to get id from path: ' + set_id );
 
-					// show cells as collection view
-					this.collectionView = new CellCollectionView({
-						collection : cellCollection
-					});
-					
-					// set this.attributes.cells to collection
-					this.set({
-						cells : this.collectionView.collection
-					});
+			this.publishEvent('!app:get-set-id-for-path', set_id, function(sid) {
 
-					this.finishSync();
+				console.log("getting set:", set_id, sid);
 
-					//opts.success(data); // run success callback
-				},
-				error: function () {
-					// throw( err );
-					this.abortSync();
-					opts.error.apply(null, arguments); // run error callback
+	  			jQuery.ajax({
+	  				
+					url: 'http://' + config.apiHost + '/' + config.apiBaseUrl + '/sets/' + sid + '.json',
+					dataType:'json',
+					success: function (data) {
+						console.log("got set data", data);
 
-				},
-				context: this
+						// set model from received data
+						this.set(data);
+
+						// handle cells as collection
+						var cells = [];
+						_.each(data.cells,function(cell){
+							cells.push(cell);
+						});
+						var cellCollection = new CellCollection(cells);
+
+						// show cells as collection view
+						this.collectionView = new CellCollectionView({
+							collection : cellCollection
+						});
+						
+						// set this.attributes.cells to collection
+						this.set({
+							cells : this.collectionView.collection
+						});
+
+						this.finishSync();
+
+						//opts.success(data); // run success callback
+					},
+					error: function () {
+						// throw( err );
+						this.abortSync();
+						opts.error.apply(null, arguments); // run error callback
+
+					},
+					context: self
+				});
+
+			},function( err ){
+				throw( err );
 			});
   		}
   	},
