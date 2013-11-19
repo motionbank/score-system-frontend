@@ -56,14 +56,10 @@ module.exports = BaseModel.extend({
 	},
 
 	getPosterImageURL : function () {
-		return 'http://' +
-				config.cloudFront.fileHost + 
-				config.cloudFront.baseUrl + 
-				'/'+
-				//(this.get('type') === 'set-link' ? 'sets' : 'cells')+
-				'cells'+
-				'/poster/full/' +
-				this.get('poster');
+		var url = 'http://' + config.assetHost + this.get('poster_image').url;
+		//console.log("POSTER", url);
+		return url;
+
 	},
 
 	getDimensions : function ()  {
