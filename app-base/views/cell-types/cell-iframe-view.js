@@ -44,8 +44,7 @@ module.exports = CellDefaultView.extend({
 		
 		// listen for solo event. close if in same solo group
 		this.subscribeEvent('!solo', function(args) {
-			// console.log("solo ");
-			// console.log(args);
+			// console.log("solo", args);
 			// skip if we sent that event
 			if ( args.origin == this ) { return; }
 			if ( args.group == this.model.get('solo') ) { 

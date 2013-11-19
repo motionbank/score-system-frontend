@@ -35,9 +35,11 @@ module.exports = BaseModel.extend({
 		return this.getFlag('sticky');
 	},
 
-	// checks if an attribute is present and either 'true' or '1'
+	// checks if an attribute is present and not false, "false", 0, "0", "", null, undefined, NaN
 	getFlag : function (flag) {
-		return /true|1/i.test(this.get(flag));
+		var val = this.get(flag);
+		if (!val) return false;  // false, 0, "", null, undefined, NaN
+		return !(/false|0/i.test(val));
 	},
 
 	// sets attributes and applies overrides set via fields
