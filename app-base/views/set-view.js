@@ -36,6 +36,7 @@ module.exports = View.extend({
 
 	render : function () {
 		// console.log("rendering set");
+		
 		View.prototype.render.apply(this,arguments);
 
 		this.layoutAttributes.position = 0.0;
@@ -47,6 +48,9 @@ module.exports = View.extend({
 			this.updateCellGrid();
 			this.establishCellGrid();
 			this.updateCellVisibility();
+
+			// add css class
+			this.$el.addClass(this.model.get('css_class_name'));
 		}).bind(this).defer();
 
 		return this;
