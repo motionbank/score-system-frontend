@@ -47,6 +47,14 @@ module.exports = BaseView.extend({
 		this.$el.addClass( 'cellid-' + this.model.getID() ); // add view id as class (viewXX) to make debugging easier
 		this.$el.data( 'cellid', this.model.getID() );
 
+		// add classes set via class field
+		var cls = this.model.get('class');
+		if (cls) {
+			_.each(cls.split(" "), function(cls) {
+				if (cls) this.$el.addClass(cls);
+			}, this);
+		}
+
 		var cssOpts = {
 			'background-image': 'url('+this.model.getPosterImageURL()+')'
 		};
