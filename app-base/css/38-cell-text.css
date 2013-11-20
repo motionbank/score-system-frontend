@@ -1,0 +1,53 @@
+.cell.type-text, .cell.type-html {
+	font-size: 15px;
+	line-height: 1.67;
+	letter-spacing: 0px;
+	color: #f5f5f5;
+	font-weight: 300;
+	padding: 1.5em;
+	/*overflow: auto;*/
+}
+
+.cell.type-text .content, .cell.type-html .content {
+	overflow: auto;
+}
+
+.cell.type-text p, .cell.type-html p {
+	text-indent: 6%;
+}
+.cell.type-text p:first-of-type, .cell.type-html p:first-of-type {
+	text-indent: 0px;
+}
+	    
+.cell.type-text h1, .cell.type-html h1 {
+	font-size: 24px;
+	font-weight: 600;
+	margin-bottom: 1.2em;
+}
+
+.cell.type-text h2, .cell.type-html h2 {
+	font-weight: 600;
+	margin-bottom:1.8em;
+}
+
+.cell.type-text a, .cell.type-html a {
+	text-decoration: none;
+	border-bottom: 1px solid #f5f5f5;
+}
+
+/* dark version. use .text-dark on cell */
+.cell.type-text.text-dark, .cell.type-html.text-dark {
+	color: #1d2121;
+	font-weight: 500;
+}
+
+.cell.type-text.text-dark a, .cell.type-html.text-dark a {
+	border-bottom: 1px solid #1d2121;
+}
+
+.cell.type-text.text-dark h1, .cell.type-html.text-dark h1 {
+	font-weight: 700;
+}
+.cell.type-text.text-dark h2, .cell.type-html.text-dark h2 {
+	font-weight: 700;
+}
