@@ -67,15 +67,16 @@ module.exports = View.extend({
 		layAttrs.height = this.$el.height();
 		
 		var cell_height = parseInt( Math.floor( layAttrs.height / this.model.get('grid_rows') ) );
-		var cell_width  = (this.model.get('cell_width') / this.model.get('cell_height')) * cell_height;
+		var cell_width  = ( this.model.get('cell_width') / this.model.get('cell_height') ) * cell_height;
 
-		layAttrs.visible_x = parseInt( layAttrs.width / cell_width );
+		layAttrs.visible_x_fract = layAttrs.width / cell_width;
+		layAttrs.visible_x = parseInt( layAttrs.visible_x_fract );
 		layAttrs.visible_y = this.model.get('grid_rows');
 
 		if ( layAttrs.width - (layAttrs.visible_x * cell_width) > cell_width / 2 ) {
 			layAttrs.visible_x++;
 		}
-		cell_width = parseInt( Math.floor( layAttrs.width / layAttrs.visible_x ) );
+		cell_width = parseInt( Math.floor( layAttrs.width / Math.ceil(layAttrs.visible_x_fract) ) );
 
 		this.model.collectionView.$el.css({
 			width: parseInt( cell_width * this.model.get('grid_cols') ) + 'px'
