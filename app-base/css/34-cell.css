@@ -205,12 +205,6 @@
 }
 
 .cell-collection .cell .info .description {
-	display: none;
-}
-
-.cell-collection .cell.type-title .info .description,
-.cell-collection .cell:hover .info .description {
-	display: block;
 	padding-top: 0.5em;
 }
 
@@ -233,3 +227,13 @@
 @-webkit-keyframes fadeOut { from {opacity:1;} to {opacity:0;} }
 @keyframes fadeOut { from {opacity:1;} to {opacity:0;} }
 .cell .content { position:relative; } /* so .loading doesn't overlay it */
+
+
+/* hide info card / title by setting .no-info on the cell */
+.cell-collection .cell.hide-info .info {
+	display: none !important;
+}
+
+.cell-collection .cell.show-info .info {
+	display: block !important;
+}
