@@ -1,11 +1,10 @@
 .cell-collection .cell.type-text, .cell-collection .cell.type-html {
 	font-size: 15px;
-	/*line-height: 1.67;*/
-	line-height: normal;
+	line-height: 1.67;
 	letter-spacing: 0px;
 	color: #f5f5f5;
 	font-weight: 300;
-	padding: 1em;
+	padding: 1.5em;
 	/*overflow: auto;*/
 }
 
@@ -23,12 +22,12 @@
 .cell.type-text h1, .cell.type-html h1 {
 	font-size: 160%;
 	font-weight: 600;
-	margin-bottom: 1.2em;
+	margin-bottom: 0.6em;
 }
 
 .cell.type-text h2, .cell.type-html h2 {
 	font-weight: 600;
-	margin-bottom:1.8em;
+	margin-bottom:0.9em;
 }
 
 .cell.type-text a, .cell.type-html a {
@@ -77,14 +76,14 @@
 	font-size: 92%;
 }
 .cell.cell-width-300.type-text, .cell.cell-width-300.type-html {
-	padding: 0.75em;
+	padding: 1em;
 	font-size: 92%;
 }
 .cell.cell-width-350.type-text, .cell.cell-width-350.type-html {
-	padding: 0.75em;
+	padding: 1em;
 	font-size: 100%;
 }
 .cell.cell-width-400.type-text, .cell.cell-width-400.type-html {
-	padding: 0.75em;
+	padding: 1.5em;
 	font-size: 100%;
 }
