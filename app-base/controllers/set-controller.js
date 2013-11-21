@@ -1,14 +1,15 @@
 var Controller = require('controllers/base/controller'),
     SetView    = require('views/set-view'),
     SetModel   = require('models/set-model'),
-    ErrorView    = require('views/error-view');
+    ErrorView  = require('views/error-view'),
+    config 	   = require('config/config');
 
 var current_opts = prev_opts = {}; // hack this sh*t
 
 module.exports = Controller.extend({
 
 	show : function ( opts ) {
-		console.log("set#show", opts.setid, opts.cellid);
+		// console.log("set#show", opts.setid, opts.cellid);
 
 		// get setid from path
 
@@ -17,7 +18,7 @@ module.exports = Controller.extend({
 
 		this.compose('set', {
 			compose : function() {
-				console.log("set compose");
+				// console.log("set compose");
 
 				// create set model
 				this.model = new SetModel();
@@ -47,7 +48,11 @@ module.exports = Controller.extend({
 							this.model.collectionView.scrollToCell(current_opts.cellid, 0);
 						}
 
-						console.log("SET RENDERED");
+						// set window title from config
+						if (config.title && config.title.title) {
+							document.title = this.model.get('title') + " - " + config.title.title + " - Motion Bank";
+						}
+
 						// show correct menu entry
 						$('#main-menu li').removeClass('current');
 						$('#main-menu li[data-setid=' +  this.model.get("id") + ']').addClass('current');
@@ -58,7 +63,7 @@ module.exports = Controller.extend({
 			},
 
 			check : function() {
-				console.log("set check");
+				// console.log("set check");
 				// differnet set -> reload
 				if ( current_opts.setid != prev_opts.setid ) {
 					return false; //rerun compose()

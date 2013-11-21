@@ -1,5 +1,6 @@
 var Controller = require('controllers/base/controller'),
-	FrontView  = require('views/cover-view');
+	FrontView  = require('views/cover-view'),
+	config = require('config/config');
 
 module.exports = Controller.extend({
 
@@ -10,6 +11,11 @@ module.exports = Controller.extend({
 		this.view = new FrontView({
 			region: 'content'
 		});
+
+		// set window title from config
+		if (config.title && config.title.title) {
+			document.title = config.title.title + " - Motion Bank";
+		}
 	}
 
 });

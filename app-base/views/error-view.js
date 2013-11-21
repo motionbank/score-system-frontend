@@ -1,4 +1,5 @@
-var View = require('views/base/view');
+var View = require('views/base/view'),
+	config = require('config/config');
 
 module.exports = View.extend({
 
@@ -16,6 +17,11 @@ module.exports = View.extend({
 		});
 
 		this.template = require( 'views/templates/errors/' + opts.template );
+
+		// set window title from config
+		if (config.title && config.title.title) {
+			document.title = config.title.title + " - Motion Bank";
+		}
 	},
 
 	getTemplateData : function () {
