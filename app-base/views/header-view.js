@@ -31,7 +31,8 @@ module.exports = View.extend({
 				this.info_id = set.id;
 				return; // skip main set here. it's already in the template as 'OVERVIEW'
 			}
-			if ( set.title.indexOf('TEST:') != 0 ) {
+			// list published sets only
+			if ( set.published ) {
 				this.setLinks.push({
 					title : set.title,
 					url : '#/set/' + (set.path || set.id),
