@@ -10,6 +10,9 @@ module.exports = Controller.extend({
 			/something/that/doesnt/exit	: {notfound:something/that/doesnt/exit}
 		*/
 
+		// hide menu (if coming back to cover page)
+		$('header #main-menu').hide();
+
 		// get options: message, template
 		this.opts = _.defaults(opts, {
 			'template' : 'default',

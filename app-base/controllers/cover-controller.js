@@ -4,6 +4,9 @@ var Controller = require('controllers/base/controller'),
 module.exports = Controller.extend({
 
 	index : function () {
+		// hide menu (if coming back to cover page)
+		$('header #main-menu').hide();
+		
 		this.view = new FrontView({
 			region: 'content'
 		});
