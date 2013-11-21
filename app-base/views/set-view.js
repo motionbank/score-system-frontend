@@ -9,11 +9,31 @@ module.exports = View.extend({
 		this.subscribeEvent('set:scrolled',function(val){
 			this.layoutAttributes.position = val;
 			this.updateCellVisibility();
+			this.updatePagingPosition();
 		});
 
 		this.subscribeEvent('window:resized',function(){
 			this.updateCellGrid();
+			this.updatePagingSize();
 		});
+
+		// window.gotoPage = _.bind(this.gotoPage, this);
+		// window.nextPage = _.bind(this.nextPage, this);
+		// window.prevPage = _.bind(this.prevPage, this);
+	},
+
+	events : {
+		'click .pager-button.prev' : function() {
+			this.prevPage(300);
+		},
+
+		'click .pager-button.next' : function() {
+			this.nextPage(300);
+		},
+
+		'click .pager .page' : function(evt) {
+			this.gotoPage( $(evt.target).index() );
+		}
 	},
 
 	id : 'set',
@@ -28,7 +48,7 @@ module.exports = View.extend({
 		position : 0.0, // scroll position in set [0,1]
 		visible_x : 0, // #cells that fit in one screen horizontally
 		visible_y : 0, // #cells that fit in one screen vertically
-		width : -1, // set width in px
+		width : -1, // set width in px (viewport)
 		height : -1, // set height in px
 		cell_width : 0, // cell width in px
 		cell_height : 0 // cell height in px
@@ -48,6 +68,9 @@ module.exports = View.extend({
 			this.updateCellGrid();
 			this.establishCellGrid();
 			this.updateCellVisibility();
+
+			this.updatePagingSize();
+			this.updatePagingPosition();
 
 			// add css class
 			this.$el.addClass(this.model.get('css_class_name'));
@@ -145,6 +168,61 @@ module.exports = View.extend({
 				}
 			}
 		});
+	},
+
+	paging : {
+		setWidth : 0,
+		pageWidth : 0,
+		numPages : 0,
+
+		scrollPosition : 0,
+		position : 0
+	},
+
+	// on resize
+	updatePagingSize : function() {
+		this.paging.pageWidth = this.$el.width();
+		this.paging.setWidth = $('#set .cell-collection').width();
+		this.paging.numPages = this.paging.setWidth / this.paging.pageWidth;
+
+		// update number of pages in pager
+		// var numWholePages = Math.floor(this.paging.numPages + 0.5);
+		var numWholePages = Math.ceil(this.paging.numPages);
+		var $pager = $('#set .pager');
+		$pager.width(50*numWholePages);
+		$pager.css('margin-left', -50*numWholePages/2 + 'px');
+		var $pages = $('#set .pager .page');
+		if ($pages.length < numWholePages) {
+			// add pages
+			$pager.append( $(Array(numWholePages-$pages.length+1).join('<div class="page"></div>')) );
+		} else if ($pages.length > numWholePages) {
+			$pages.slice(numWholePages).remove();
+		}
+	},
+
+	// on scroll
+	updatePagingPosition : function() {
+		this.paging.scrollPosition = $('#set .cell-collection-container').scrollLeft();
+		this.paging.position = this.paging.scrollPosition / this.paging.pageWidth;
+
+		// update current page in pager
+		$('#set .pager .page').removeClass('current');
+		$('#set .pager .page').eq(Math.floor(this.paging.position+0.5)).addClass('current');
+	},
+
+	gotoPage : function (pageNo, time) {
+		if ( !time ) time = 0;
+		//$('#set .cell-collection-container').scrollLeft( pageNo * this.paging.pageWidth );
+		$('#set .cell-collection-container').animate( {scrollLeft : pageNo * this.paging.pageWidth}, time );
+	},
+
+	nextPage : function (time) {
+		if ( !time ) time = 0;
+		this.gotoPage( Math.floor(this.paging.position+1), time );
+	},
+
+	prevPage : function (time) {
+		if ( !time ) time = 0;
+		this.gotoPage( Math.ceil(this.paging.position-1), time );
 	}
-  
 });

@@ -3,4 +3,102 @@
 	width: 100%;
 
 	overflow: auto; /* show scrollbar */
+
+	position: relative;
+}
+
+/* in set navigation */
+#set .pager-button {
+	position: absolute;
+	width:10%;
+	max-width:150px;
+	height:100%;
+	top:0;
+	/*opacity: 0;*/
+	z-index: 9999;
+	cursor: pointer;
+
+	color:white;
+	color:rgba(255, 255, 255, 0);
+	background-color: rgba(59, 66, 65, 0);
+	transition: all 0.3s;
+	font-weight: bold;
+}
+
+#set .pager-button:hover {
+	/*opacity:0.85;*/
+	background-color: rgba(59, 66, 65, 0.25);
+	color:rgba(255, 255, 255, 1);
+}
+
+#set .pager-button:after {
+	position: absolute;
+	top:40%;
+	font-size: 5em;
+}
+
+#set .pager-button.prev {
+	left:0;
+}
+
+#set .pager-button.prev:after {
+	content: '⟨';
+	left:25%;
+}
+
+#set .pager-button.next {
+	right:0;
+}
+
+
+#set .pager-button.next:after {
+	content: '⟩';
+	right:25%;
+}
+
+/* pager */
+#set .pager {
+	width: 300px;
+	height: 100px;
+	margin: 0 auto;
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	margin-left: -150px;
+	opacity: 0;
+	transition: opacity 0.5s;
+	transition-delay: 2s;
+	background-color: rgba(59, 66, 65, 0.25);
+}
+
+#set .pager:hover {
+	opacity: 1;
+	transition-delay: 0s;
+}
+
+#set .pager .page {
+	width:40px;
+	height:40px;
+	float: left;
+	cursor: pointer;
+	position: relative;
+	margin:5px;
+}
+#set .pager .page:after {
+	content: '';
+	width:10px;
+	height:10px;
+	-webkit-border-radius: 10px;
+	background-color: white;
+	margin:15px;
+	display: block;
+}
+
+#set .pager .page.current:after {
+	-webkit-border-radius: 0;
+	width:10px;
+	height:10px;
+	margin: 10px;
+	background-color: transparent;
+	border: 5px solid white;
 }
