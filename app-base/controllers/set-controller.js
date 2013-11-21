@@ -32,6 +32,7 @@ module.exports = Controller.extend({
 					id : opts.setid,
 
 					error : function(model, response, options) {
+						$('header #main-menu').hide();
 						//Chaplin.helpers.redirectTo('error#show', {message: 'Error message'}); // use this to redirect to an error page (changes url)
 						new ErrorView( {message : 'Couldn\'t get the set you requested. (' + response.status + ')'} );
 					}
@@ -45,6 +46,13 @@ module.exports = Controller.extend({
 						if (current_opts.cellid) {
 							this.model.collectionView.scrollToCell(current_opts.cellid, 0);
 						}
+
+						console.log("SET RENDERED");
+						// show correct menu entry
+						$('#main-menu li').removeClass('current');
+						$('#main-menu li[data-setid=' +  this.model.get("id") + ']').addClass('current');
+						$('#main-menu').fadeIn(500);
+
 					}).bind(this).defer();
 				}, this);
 			},

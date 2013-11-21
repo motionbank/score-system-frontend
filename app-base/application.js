@@ -1,5 +1,6 @@
 /* application.js */
 var ErrorView = require('views/error-view'),
+	HeaderView = require('views/header-view'),
 	config = require('config/config'),
 	defaultSets = null,
 	defaultSetsById = null,
@@ -72,6 +73,7 @@ module.exports = Chaplin.Application.extend({
 						} else if ( setPathOrId in defaultSetsById ) {
 							cbSucc( setPathOrId );
 						} else {
+							$('header #main-menu').hide(); // hide menu
 							new ErrorView({ 
 								message : 'Couldn\'t get the set you requested. (' + setPathOrId.replace(/[^-a-z0-9]/ig,'-') + ')' 
 							});
@@ -83,7 +85,7 @@ module.exports = Chaplin.Application.extend({
 		Chaplin.Application.prototype.initialize.apply(this,arguments);
 
 		var setsLoadedCallback = function setsLoadedCallback (err, sets) {
-			if ( !err ) {
+			if ( !err && !defaultSets ) {
 				defaultSets = [];
 				defaultSetsByUrl = {};
 				defaultSetsById = {};
@@ -92,9 +94,13 @@ module.exports = Chaplin.Application.extend({
 					defaultSetsById[set.id] = set;
 					defaultSetsByUrl[set.path] = set;
 				});
+				
+				// render header i.e. menu
+				new HeaderView( {sets : defaultSets} );
 			}
 		};
 
+		// TODO: this is obsolete, right florian?
 		loadUserSets(1, setsLoadedCallback);
 
 		// // initialize PieceMaker API client
