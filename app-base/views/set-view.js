@@ -33,6 +33,14 @@ module.exports = View.extend({
 
 		'click .pager .page' : function(evt) {
 			this.gotoPage( $(evt.target).index() );
+		},
+
+		'mouseover .pager, .pager-button' : function() {
+			this.$el.addClass('show-nav');
+		},
+
+		'mouseout .pager, .pager-button' : function() {
+			this.$el.removeClass('show-nav');
 		}
 	},
 
@@ -189,8 +197,6 @@ module.exports = View.extend({
 		// var numWholePages = Math.floor(this.paging.numPages + 0.5);
 		var numWholePages = Math.ceil(this.paging.numPages);
 		var $pager = $('#set .pager');
-		$pager.width(50*numWholePages);
-		$pager.css('margin-left', -50*numWholePages/2 + 'px');
 		var $pages = $('#set .pager .page');
 		if ($pages.length < numWholePages) {
 			// add pages
