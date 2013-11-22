@@ -106,3 +106,16 @@
 	display: list-item;
 	opacity: 1;
 }
+
+/*  show/hide info link */
+/*#main-menu li.show-info-link, #main-menu  li.hide-info-link {
+	cursor:pointer;
+}*/
+
+#main-menu li.show-info-link a:after {
+	content: 'Show Info';
+}
+
+#main-menu  li.hide-info-link a:after {
+	content: 'Hide Info';
+}

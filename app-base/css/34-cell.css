@@ -235,7 +235,7 @@
 }
 
 .cell-collection .cell.show-info .info {
-	display: block !important;
+	display: block;
 }
 
 .cell-collection .cell.click-through {

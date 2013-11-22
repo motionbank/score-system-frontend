@@ -13,6 +13,24 @@ module.exports = View.extend({
 		'click #main-menu li.set-link a' : function(evt) {
 			$('#main-menu li').removeClass('current');
 			$(evt.target).parent('li').addClass('current');
+			// reset show-info link, since we switched the set.
+			$('#main-menu li.hide-info-link').removeClass('hide-info-link').addClass('show-info-link');
+		},
+
+		'click #main-menu li.show-info-link' : function(evt) {
+			// console.log("SHOW info");
+			evt.preventDefault();
+			var $li = $(evt.currentTarget);
+			$li.removeClass('show-info-link').addClass('hide-info-link');
+			$('.cell-collection .cell').addClass('show-info');
+		},
+
+		'click #main-menu li.hide-info-link' : function(evt) {
+			// console.log("HIDE info");
+			evt.preventDefault();
+			var $li = $(evt.currentTarget);
+			$li.removeClass('hide-info-link').addClass('show-info-link');
+			$('.cell-collection .cell').removeClass('show-info');
 		}
 	},
 
