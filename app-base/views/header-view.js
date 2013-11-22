@@ -21,7 +21,7 @@ module.exports = View.extend({
 		this.info_id = '';
 		this.setLinks = [];
 
-		// Skip sets beginning with 'TEST:'
+		// create Set Menu
 		_.each(opts.sets, function(set) {
 			if ( set.path == 'sets') {
 				this.overview_id = set.id;
