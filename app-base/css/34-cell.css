@@ -237,3 +237,7 @@
 .cell-collection .cell.show-info .info {
 	display: block !important;
 }
+
+.cell-collection .cell.click-through {
+	pointer-events: none;
+}
