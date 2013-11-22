@@ -39,6 +39,11 @@ module.exports = View.extend({
 		this.info_id = '';
 		this.setLinks = [];
 
+		// sort by set title
+		opts.sets = _.sortBy(opts.sets, function(set) {
+			return set.title;
+		});
+
 		// create Set Menu
 		_.each(opts.sets, function(set) {
 			if ( set.path == 'sets') {
