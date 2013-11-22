@@ -50,13 +50,13 @@ module.exports = View.extend({
 				return; // skip main set here. it's already in the template as 'OVERVIEW'
 			}
 			// list published sets only
-			if ( set.published ) {
-				this.setLinks.push({
-					title : set.title,
-					url : '#/set/' + (set.path || set.id),
-					id : set.id
-				});
-			}
+			this.setLinks.push({
+				title : set.title,
+				url : '#/set/' + (set.path || set.id),
+				id : set.id,
+				hidden : !set.published
+			});
+			// if ( set.published ) {}
 		}, this);
 	},
 
