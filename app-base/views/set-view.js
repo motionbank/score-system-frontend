@@ -16,10 +16,16 @@ module.exports = View.extend({
 			this.updateCellGrid();
 			this.updatePagingSize();
 		});
-
-		// window.gotoPage = _.bind(this.gotoPage, this);
-		// window.nextPage = _.bind(this.nextPage, this);
-		// window.prevPage = _.bind(this.prevPage, this);
+		
+		// arrow key navigation
+		var that = this;
+		$(document).off('keydown.arrownav').on('keydown.arrownav', function(e) {
+			if (e.keyCode == 37) {  // LEFT arrow key
+				that.prevPage(300);
+			} else if (e.keyCode == 39) { // RIGHT arrow key
+				that.nextPage(300);
+			}
+		});
 	},
 
 	events : {
