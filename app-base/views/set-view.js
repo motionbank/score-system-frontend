@@ -16,7 +16,7 @@ module.exports = View.extend({
 			this.updateCellGrid();
 			this.updatePagingSize();
 		});
-		
+
 		// arrow key navigation
 		var that = this;
 		$(document).off('keydown.arrownav').on('keydown.arrownav', function(e) {
@@ -203,12 +203,20 @@ module.exports = View.extend({
 		// var numWholePages = Math.floor(this.paging.numPages + 0.5);
 		var numWholePages = Math.ceil(this.paging.numPages);
 		var $pager = $('#set .pager');
-		var $pages = $('#set .pager .page');
-		if ($pages.length < numWholePages) {
-			// add pages
-			$pager.append( $(Array(numWholePages-$pages.length+1).join('<div class="page"></div>')) );
-		} else if ($pages.length > numWholePages) {
-			$pages.slice(numWholePages).remove();
+		var $buttons = $('#set .pager-button');
+		if (numWholePages > 1) { // show navigation for more than one page
+			var $pages = $('#set .pager .page');
+			if ($pages.length < numWholePages) {
+				// add pages
+				$pager.append( $(Array(numWholePages-$pages.length+1).join('<div class="page"></div>')) );
+			} else if ($pages.length > numWholePages) {
+				$pages.slice(numWholePages).remove();
+			}
+			$pager.removeClass('element-hidden');
+			$buttons.removeClass('element-hidden');
+		} else { // hide navigation if only one page
+			$pager.addClass('element-hidden');
+			$buttons.addClass('element-hidden');
 		}
 	},
 
