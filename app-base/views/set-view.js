@@ -15,6 +15,7 @@ module.exports = View.extend({
 		this.subscribeEvent('window:resized',function(){
 			this.updateCellGrid();
 			this.updatePagingSize();
+			this.updatePagingPosition();
 		});
 
 		// arrow key navigation
@@ -227,7 +228,13 @@ module.exports = View.extend({
 
 		// update current page in pager
 		$('#set .pager .page').removeClass('current');
-		$('#set .pager .page').eq(Math.floor(this.paging.position+0.5)).addClass('current');
+		var currentPage;
+		if (this.layoutAttributes.position == 1) { // special case: highlight last menu item if on the right edge of the set
+			currentPage = Math.ceil(this.paging.numPages) - 1;
+		} else {
+			currentPage = Math.floor(this.paging.position+0.5);
+		}
+		$('#set .pager .page').eq(currentPage).addClass('current');
 	},
 
 	gotoPage : function (pageNo, time) {
