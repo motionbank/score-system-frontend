@@ -1,8 +1,8 @@
 /* cell-vimeo-view.js */
-var CellIFrameView = require('views/cell-types/cell-iframe-view'),
+var CellMediaView = require('views/cell-types/cell-media-view'),
 	pm  = require('postmessenger');
 
-module.exports = CellIFrameView.extend({
+module.exports = CellMediaView.extend({
 	// attributes governing how a cell behaves in the view
 	// cell types have default values. can be overridden via fields
 	// these are the defaults use by most cell types
@@ -14,7 +14,7 @@ module.exports = CellIFrameView.extend({
 	},
 
 	initialize : function ( opts ) {
-		CellIFrameView.prototype.initialize.apply(this,arguments);
+		CellMediaView.prototype.initialize.apply(this,arguments);
 
 		var loop = this.model.attributes['loop'] && /^true|1$/i.test(this.model.attributes['loop']);
 		var autoplay = this.model.attributes['autoplay'] && /^true|1$/i.test(this.model.attributes['autoplay']);
@@ -29,7 +29,15 @@ module.exports = CellIFrameView.extend({
 		});
 	},
 
-	// overridden
+	render : function () {
+		CellMediaView.prototype.render.apply(this,arguments);
+		
+		// when rendering is finished, meaning the <iframe> exists, connect postmessenger
+		_(this.connectPM).bind(this).defer();
+		
+		return this;
+	},
+
 	connectPM : function () {
 		// console.log("connectPM " + this.cellInfo());
 		var that = this;
@@ -81,10 +89,6 @@ module.exports = CellIFrameView.extend({
 			});
 
 		});
-	},
-
-	sendPM : function (msg, opts) {
-		// no op
 	}
 
 });
