@@ -87,6 +87,20 @@ module.exports = CellMediaView.extend({
 			// console.log("sending deactivate");
 			this.sendPM('deactivate!');
 		}
+	},
+
+	// show iframe only when loaded
+	open : function () {
+		var $iframe = $('iframe',this.$el);
+		$iframe.css('visibility', 'hidden');
+		var $cell = this.$el;
+		// $cell.css('background-color', 'rgba(255,255,255,0.2)');
+		$iframe.one('load.open', function() { 
+			$(this).css('visibility', 'visible');
+			// $cell.css('background-color', 'transparent'); 
+		});
+
+		CellMediaView.prototype.open.apply(this,arguments);
 	}
 
 });
