@@ -62,7 +62,8 @@ module.exports = CellDefaultView.extend({
 		}
 		if ( data['iframe-src'] ) {
 			var spl = data['iframe-src'].split('?');
-			data['iframe-src'] = spl[0] + '?' + 'domain=http://' + config.host + '&' + (spl[1] || '');
+			var host = window.location.host;
+			data['iframe-src'] = spl[0] + '?' + 'domain=http://' + host + '&' + (spl[1] || '');
 		}
 		
 		// collect extra attributes for <iframe>
