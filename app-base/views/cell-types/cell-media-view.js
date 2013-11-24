@@ -50,6 +50,8 @@ module.exports = CellDefaultView.extend({
 				if (!this.isClosed()) this.close(); 
 			}
 		});
+
+		this.$el.css('cursor', 'pointer');
 	},
 
 	getTemplateData : function () {
@@ -95,6 +97,8 @@ module.exports = CellDefaultView.extend({
 			// console.log('publish solo ' + soloGroup);
 			this.publishEvent('!solo', { group : soloGroup, origin : this });
 		}
+
+		this.$el.css('cursor', 'auto');
 	},
 
 	// remove content
@@ -108,6 +112,8 @@ module.exports = CellDefaultView.extend({
 		var $iframe = $('iframe',this.$el);
 		$iframe.off('.open'); // don't set open state anymore, if pending
 		$iframe.attr( 'src', 'about:blank');
+
+		this.$el.css('cursor', 'pointer');
 
 		this.loadState = "closed";
 	},
