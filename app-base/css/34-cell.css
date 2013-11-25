@@ -229,6 +229,12 @@
 .cell .content { position:relative; } /* so .loading doesn't overlay it */
 
 
+
+/* show info command from the menu: show-info-requested. will be overridden by below classes */
+.cell-collection .cell.show-info-requested .info {
+	display: block;
+}
+
 /* hide info card / title by setting .hide-info on the cell */
 .cell-collection .cell.hide-info .info {
 	display: none !important;
@@ -238,11 +244,11 @@
 	display: block;
 }
 
-.cell-collection .cell.click-through {
-	pointer-events: none;
-}
-
 /* hide description only: .hide-description */
 .cell-collection .cell.hide-description .info .description {
 	display: none !important;
+}
+
+.cell-collection .cell.click-through {
+	pointer-events: none;
 }

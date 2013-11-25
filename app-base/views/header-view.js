@@ -22,7 +22,7 @@ module.exports = View.extend({
 			evt.preventDefault();
 			var $li = $(evt.currentTarget);
 			$li.removeClass('show-info-link').addClass('hide-info-link');
-			$('.cell-collection .cell').addClass('show-info');
+			$('.cell-collection .cell').addClass('show-info-requested');
 		},
 
 		'click #main-menu li.hide-info-link' : function(evt) {
@@ -30,7 +30,7 @@ module.exports = View.extend({
 			evt.preventDefault();
 			var $li = $(evt.currentTarget);
 			$li.removeClass('hide-info-link').addClass('show-info-link');
-			$('.cell-collection .cell').removeClass('show-info');
+			$('.cell-collection .cell').removeClass('show-info-requested');
 		}
 	},
 
