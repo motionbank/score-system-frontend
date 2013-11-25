@@ -24,9 +24,6 @@
 	line-height: 1.3;
 }
 
-.cell-collection .cell .info .description {
-}
-
 /*.cell-collection .cell .info-wrapper {
 	position: absolute;
 	top: 0px; left: 0px;
@@ -40,7 +37,6 @@
 }
 
 .cell-collection .cell .info {
-
 	font-size: 90%;
 	
 	position: absolute;
@@ -195,11 +191,11 @@
 
 .cell-collection .cell.type-recording:hover,
 .cell-collection .cell.type-context:hover,
-.cell-collection .cell.type-set-link:hover {
+.cell-collection .cell.type-set_link:hover {
 	cursor: pointer;
 }
 
-.cell-collection .cell.type-set-link .info,
+.cell-collection .cell.type-set_link .info,
 .cell-collection .cell.with-info .info {
 	display: block;
 }
@@ -252,3 +248,16 @@
 .cell-collection .cell.click-through {
 	pointer-events: none;
 }
+
+
+/* link cell */
+.cell-collection .cell.type-set_link .description {
+	display:none;
+}
+.cell-collection .cell.type-set_link:hover .description {
+	display:block;
+}
+.cell-collection .cell.type-set_link.show-info-requested .description {
+	display:block;
+}
+
