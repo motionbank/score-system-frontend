@@ -1,13 +1,17 @@
 .cell-collection .cell.type-text, .cell-collection .cell.type-html {
-	font-size: 15px;
 	line-height: 1.67;
-	letter-spacing: 0px;
+	letter-spacing: 0;
 	color: #f5f5f5;
 	font-weight: 300;
-	padding: 1.5em;
-	/*overflow: auto;*/
+	padding:0; /* moved padding to .content (where scrollbar is) */
 }
 
+.cell-collection .cell.type-text .content, .cell-collection .cell.type-html .content {
+	font-size: 15px;
+	padding: 1.5em;
+}
+
+/* scrollbar */
 .cell.type-text .content, .cell.type-html .content {
 	overflow: auto;
 }
@@ -54,36 +58,36 @@
 
 
 /* scaling */
-.cell.cell-width-0.type-text, .cell.cell-width-0.type-html,
-.cell.cell-width-50.type-text, .cell.cell-width-50.type-html {
+.cell.cell-width-0.type-text .content, .cell.cell-width-0.type-html .content,
+.cell.cell-width-50.type-text .content, .cell.cell-width-50.type-html .content {
 	padding: 0.5em;
 	font-size: 85%;
 }
-.cell.cell-width-100.type-text, .cell.cell-width-100.type-html {
+.cell.cell-width-100.type-text .content, .cell.cell-width-100.type-html .content {
 	padding: 0.5em;
 	font-size: 85%;
 }
-.cell.cell-width-150.type-text, .cell.cell-width-150.type-html {
+.cell.cell-width-150.type-text .content, .cell.cell-width-150.type-html .content {
 	padding: 0.5em;
 	font-size: 85%;
 }
-.cell.cell-width-200.type-text, .cell.cell-width-200.type-html {
+.cell.cell-width-200.type-text .content, .cell.cell-width-200.type-html .content {
 	padding: 0.5em;
 	font-size: 85%;
 }
-.cell.cell-width-250.type-text, .cell.cell-width-250.type-html {
+.cell.cell-width-250.type-text .content, .cell.cell-width-250.type-html .content {
 	padding: 0.75em;
 	font-size: 92%;
 }
-.cell.cell-width-300.type-text, .cell.cell-width-300.type-html {
+.cell.cell-width-300.type-text .content, .cell.cell-width-300.type-html .content {
 	padding: 1em;
 	font-size: 92%;
 }
-.cell.cell-width-350.type-text, .cell.cell-width-350.type-html {
+.cell.cell-width-350.type-text .content, .cell.cell-width-350.type-html .content {
 	padding: 1em;
 	font-size: 100%;
 }
-.cell.cell-width-400.type-text, .cell.cell-width-400.type-html {
+.cell.cell-width-400.type-text .content, .cell.cell-width-400.type-html .content {
 	padding: 1.5em;
 	font-size: 100%;
 }
