@@ -11,7 +11,7 @@
 #set .pager-button {
 	position: absolute;
 	width:6%;
-	max-width:100px;
+	max-width:80px;
 	height:100%;
 	top:0;
 	cursor: pointer;
@@ -19,6 +19,11 @@
 	opacity: 0;
 	transition-delay: 1.5s;
 	z-index: 999999;
+
+	height:80px;
+	margin-top:-40px;
+	background-color: rgba(59, 66, 65, 0.66);
+	top:50%;
 }
 
 #set .pager-button:hover, #set.show-nav .pager-button {
@@ -26,26 +31,16 @@
 	transition-delay: 0;
 }
 
-#set .pager-button:before {
-	content: '';
-	position: absolute;
-	width:100%;
-	height:80px;
-	margin-top:-40px;
-	background-color: rgba(59, 66, 65, 0.66);
-	top:50%;
-}
-
 #set .pager-button.prev {
 	left:0;
 }
 
-#set .pager-button.prev:before {
+#set .pager-button.prev {
 	background-image: url(../imgs/arr_prev_light.svg);
 	background-repeat: no-repeat;
 	background-position: center center;
 }
-#set .pager-button.first:before {
+#set .pager-button.first {
 	background-image: url(../imgs/arr_prev_first_light.svg);
 }
 
@@ -53,17 +48,17 @@
 	right:0;
 }
 
-#set .pager-button.next:before {
+#set .pager-button.next {
 	background-image: url(../imgs/arr_next_light.svg);
 	background-repeat: no-repeat;
 	background-position: center center;
 }
-#set .pager-button.last:before {
+#set .pager-button.last {
 	background-image: url(../imgs/arr_next_last_light.svg);
 }
 
-/* pager */
-#set .pager {
+/* bottom pager */
+#set .pager:hover, #set .pager {
 	width:100%;
 	height: 50px;
 	margin: 0 auto;
@@ -74,9 +69,11 @@
 	transition-delay: 1.5s;
 	text-align: center;
 	z-index: 999999;
+	pointer-events:none;
+	overflow: hidden; /* don't wrap when screen is too small */
 }
 
-#set .pager:hover, #set.show-nav .pager {
+#set.show-nav .pager {
 	opacity: 1;
 	transition-delay: 0s;
 }
@@ -88,6 +85,7 @@
 	position: relative;
 	display: inline-block;
 	background-color: rgba(59, 66, 65, 0.66);
+	pointer-events:auto;
 }
 #set .pager .page:after {
 	content: '';

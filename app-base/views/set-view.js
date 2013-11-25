@@ -43,12 +43,14 @@ module.exports = View.extend({
 			this.gotoPage( $(evt.target).index() );
 		},
 
-		'mouseover .pager, .pager-button' : function() {
-			this.$el.addClass('show-nav');
-		},
-
-		'mouseout .pager, .pager-button' : function() {
-			this.$el.removeClass('show-nav');
+		// UI hot zones  / show or hide UI
+		'mousemove' : function(e) {
+			var winWidth = this.$el.width(), hotWidth = winWidth * 0.06, $pager = this.$el.find('.pager');
+			if (e.pageX <  hotWidth || e.pageX > winWidth-hotWidth || e.pageY > $pager.offset().top) {
+				this.$el.addClass('show-nav');
+			} else {
+				this.$el.removeClass('show-nav');
+			}
 		}
 	},
 
