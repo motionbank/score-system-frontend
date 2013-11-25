@@ -33,11 +33,11 @@
 	width:320px;
 	top:12px;
 	margin:0 auto;
-	z-index: 999;
 	letter-spacing: 0.05em;
 	left:116px;
 	display:none;
 	box-sizing:content-box;
+	z-index: 999999; /* really above everything else */
 }
 
 /* add a 50px tolerance zone */
