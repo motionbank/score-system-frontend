@@ -35,17 +35,32 @@ module.exports = View.extend({
 	},
 
 	initialize : function (opts) {
+		this.createSetMenu(opts.sets);
+	},
+
+	getTemplateData : function () {
+		return {
+			overview_id : this.overview_id,
+			info_id : this.info_id,
+			setLinks : this.setLinks 
+		};
+	},
+
+	createSetMenu : function (sets) {
 		this.overview_id = '';
 		this.info_id = '';
 		this.setLinks = [];
 
 		// sort by set title
-		opts.sets = _.sortBy(opts.sets, function(set) {
+		sets = _.sortBy(sets, function(set) {
 			return set.title;
 		});
 
 		// create Set Menu
-		_.each(opts.sets, function(set) {
+		_.each(sets, function(set) {
+			// hide leading numbering
+			set.title = set.title.replace(/^\d+ *-* */, '');
+
 			if ( set.path == 'sets') {
 				this.overview_id = set.id;
 				return; // skip main set here. it's already in the template as 'OVERVIEW'
@@ -63,14 +78,6 @@ module.exports = View.extend({
 			});
 			// if ( set.published ) {}
 		}, this);
-	},
-
-	getTemplateData : function () {
-		return {
-			overview_id : this.overview_id,
-			info_id : this.info_id,
-			setLinks : this.setLinks 
-		};
 	}
 
 });
