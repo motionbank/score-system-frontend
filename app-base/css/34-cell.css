@@ -260,4 +260,6 @@
 .cell-collection .cell.type-set_link.show-info-requested .description {
 	display:block;
 }
-
+.cell-collection .cell.type-set_link .title {
+	text-decoration: underline;	
+}
