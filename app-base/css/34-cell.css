@@ -249,6 +249,10 @@
 	pointer-events: none;
 }
 
+/* hide-background class */
+.cell-collection .cell.hide-background {
+	background-image: none !important;
+}
 
 /* link cell */
 .cell-collection .cell.type-set_link .description {
