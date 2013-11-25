@@ -45,6 +45,9 @@
 	background-repeat: no-repeat;
 	background-position: center center;
 }
+#set .pager-button.first:before {
+	background-image: url(../imgs/arr_prev_first_light.svg);
+}
 
 #set .pager-button.next {
 	right:0;
@@ -55,7 +58,9 @@
 	background-repeat: no-repeat;
 	background-position: center center;
 }
-
+#set .pager-button.last:before {
+	background-image: url(../imgs/arr_next_last_light.svg);
+}
 
 /* pager */
 #set .pager {

@@ -236,6 +236,13 @@ module.exports = View.extend({
 			currentPage = Math.floor(this.paging.position+0.5);
 		}
 		$('#set .pager .page').eq(currentPage).addClass('current');
+
+		// nav arrows: first/last check
+		var prev = $('#set .pager-button.prev'), next = $('#set .pager-button.next');
+		if (this.layoutAttributes.position == 0) prev.addClass('first');
+		else prev.removeClass('first');
+		if (this.layoutAttributes.position == 1) next.addClass('last');
+		else next.removeClass('last');
 	},
 
 	gotoPage : function (pageNo, time) {
