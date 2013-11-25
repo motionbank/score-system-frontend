@@ -11,11 +11,11 @@
 <nav id="main-menu" class="menu">
     <ul>
         <li class="special set-link" data-setid="{{overview_id}}"><a href="#/set/sets">Overview</a></li>
-        <li class="special set-link" data-setid="{{info_id}}"><a href="#/set/info">General Information</a></li>
-        <li class="special line-below"><a href="http://motionbank.org/">Motion Bank Main Website</a></li>
+        {{!-- <li class="special set-link" data-setid="{{info_id}}"><a href="#/set/info">General Information</a></li> --}}
         {{#each setLinks}}
         <li class="set-link{{#if this.hidden}} hidden{{/if}}" data-setid="{{this.id}}"><a href="{{this.url}}">{{this.title}}</a></li>
         {{/each}}
         <li class="special line-above show-info-link"><a href="#"></a></li>
+        <li class="special line-above"><a href="http://motionbank.org/">Motion Bank Main Website</a></li>
     </ul>
 </nav>
