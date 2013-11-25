@@ -28,7 +28,7 @@
 
 #set .pager-button:hover, #set.show-nav .pager-button {
 	opacity:1;
-	transition-delay: 0;
+	transition-delay: 0s;
 }
 
 #set .pager-button.prev {
@@ -92,6 +92,7 @@
 	width:10px;
 	height:10px;
 	-webkit-border-radius: 10px;
+	border-radius: 10px;
 	background-color: white;
 	margin:20px;
 	display: block;
@@ -99,6 +100,7 @@
 
 #set .pager .page.current:after {
 	-webkit-border-radius: 0;
+	border-radius:0;
 	width:10px;
 	height:10px;
 	margin: 15px;
