@@ -14,6 +14,7 @@ module.exports = View.extend({
 
 		this.subscribeEvent('window:resized',function(){
 			this.updateCellGrid();
+			this.updateCellVisibility(); // prevent closed iframes that should be open (when sizing down, scrolling and sizing up again)
 			this.updatePagingSize();
 			this.updatePagingPosition();
 		});
