@@ -58,7 +58,7 @@ module.exports = BaseModel.extend({
 						_.each(data.cells,function(cell){
 							cells.push(cell);
 						});
-						var cellCollection = new CellCollection(cells);
+						var cellCollection = new CellCollection(cells, {"set_id" : data.id, "set_path" : data.path} );
 
 						// show cells as collection view
 						this.collectionView = new CellCollectionView({
