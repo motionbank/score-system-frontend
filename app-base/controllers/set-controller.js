@@ -10,9 +10,7 @@ module.exports = Controller.extend({
 
 	show : function ( opts ) {
 		// console.log("set#show", opts.setid, opts.cellid);
-
-		// get setid from path
-
+		
 		prev_opts = current_opts;
 		current_opts = opts;
 

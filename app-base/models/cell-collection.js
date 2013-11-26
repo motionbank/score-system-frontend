@@ -2,6 +2,11 @@ var BaseCollection = require('models/base/collection'),
 	CellModel      = require('models/cell-model');
 
 module.exports = BaseCollection.extend({
+	initialize : function (cells, opts) {
+		BaseCollection.prototype.initialize.apply(this, arguments);
+		this.set_id = opts.set_id;
+		this.set_path = opts.set_path;
+	},
 
 	// we could also override the models per cell type
 	model: function(attrs, options) {
@@ -17,16 +22,17 @@ module.exports = BaseCollection.extend({
 	},
 
 	modeltype : 'cell-collection',
+	
+	// utility function : get the cell in this collection with the given id. returns undefined if not found
+	getCellByID: function (id) {
+		return this.get(id);
+	},
 
-	//model : CellModel
-
-	focusedCell : null, // i.e. most recently clicked iframe or vimeo cell
-
-	// focus a cell 
-	focusCell : function (cellModel) {
-		if ( this.focusedCell) this.focusedCell.set('focused',false); // unfocus old cell
-		this.focusedCell = cellModel; // save new cell
-		this.focusedCell.set('focused',true); // focus new cell
+	// utility function : get the first cell in this collection that matches the given path. returns undefined if not found
+	getCellByPath: function (path) {   
+		return this.find(function(cell) {
+			return cell.get('path') == path;
+		});
 	}
 	
 });
