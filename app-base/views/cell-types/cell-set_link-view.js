@@ -9,12 +9,21 @@ module.exports = CellDefaultView.extend({
 			e.preventDefault();
 			var href = this.$el.find('a').attr('href');
 
-			// only need to do this, if path is the same (to force jump to cell)
-			// console.log("INIT SC");
-			// var sc = new SetController();
-			// sc.show({setid: 'all-cell-types', cellid: 'b0c35f716d6d6d8d0daa0100'});
-			// console.log("LOC");
+			// set to link to. if no set id given for link, use current set path or id
+			var destSetID = (!this.model.get('set-id') || this.model.get('set-id') == '0') ? this.model.collection.set_path || this.model.collection.set_id : this.model.get('set-id');
+			// cell id to link to. may be undefined if none given
+			var destCellID = this.model.get('cell-id');
+			// current cell id in the url
+			var currentCellID = window.location.hash.match(/^#\/set\/.+\/(.*)\/?/);
+			if (currentCellID) currentCellID = currentCellID[1]; // if we matched, get the capture group
+			
+			// same set and cell : need to manually call the controller action, router router won't do it again.
+			if ( (destSetID == this.model.collection.set_path || destSetID == this.model.collection.set_id) && destCellID == currentCellID ) {
+				var sc = new SetController();
+				sc.show( {'setid': destSetID, 'cellid': destCellID} );
+			}
 
+			// navigate
 			window.location = href;
 			return false;
 		}
