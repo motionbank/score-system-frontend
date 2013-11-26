@@ -19,14 +19,5 @@ module.exports = BaseCollection.extend({
 	modeltype : 'cell-collection',
 
 	//model : CellModel
-
-	focusedCell : null, // i.e. most recently clicked iframe or vimeo cell
-
-	// focus a cell 
-	focusCell : function (cellModel) {
-		if ( this.focusedCell) this.focusedCell.set('focused',false); // unfocus old cell
-		this.focusedCell = cellModel; // save new cell
-		this.focusedCell.set('focused',true); // focus new cell
-	}
 	
 });
