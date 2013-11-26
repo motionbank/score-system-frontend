@@ -22,7 +22,17 @@ module.exports = BaseCollection.extend({
 	},
 
 	modeltype : 'cell-collection',
+	
+	// utility function : get the cell in this collection with the given id. returns undefined if not found
+	getCellByID: function (id) {
+		return this.get(id);
+	},
 
-	//model : CellModel
+	// utility function : get the first cell in this collection that matches the given path. returns undefined if not found
+	getCellByPath: function (path) {   
+		return this.find(function(cell) {
+			return cell.get('path') == path;
+		});
+	}
 	
 });
