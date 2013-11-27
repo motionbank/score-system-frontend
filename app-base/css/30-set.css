@@ -15,20 +15,24 @@
 	height:100%;
 	top:0;
 	cursor: pointer;
-	transition: opacity 0.3s;
-	opacity: 0;
+	transition: all 0.3s;
 	transition-delay: 1.5s;
+	opacity: 0;
 	z-index: 999999;
 
 	height:80px;
 	margin-top:-40px;
 	background-color: rgba(59, 66, 65, 0.66);
 	top:50%;
+
+	visibility: hidden; /* don't trigger hover */
 }
 
-#set .pager-button:hover, #set.show-nav .pager-button {
+/*#set .pager-button:hover, #set.show-nav .pager-button {*/
+#set.show-nav .pager-button {
 	opacity:1;
 	transition-delay: 0s;
+	visibility: visible;
 }
 
 #set .pager-button.prev {
@@ -58,24 +62,27 @@
 }
 
 /* bottom pager */
-#set .pager:hover, #set .pager {
+/*#set .pager:hover, #set .pager {*/
+#set .pager {
 	width:100%;
 	height: 50px;
 	margin: 0 auto;
 	position: absolute;
 	bottom: 20px;
 	opacity: 0;
-	transition: opacity 0.5s;
+	transition: all 0.5s;
 	transition-delay: 1.5s;
 	text-align: center;
 	z-index: 999999;
 	pointer-events:none;
 	overflow: hidden; /* don't wrap when screen is too small */
+	visibility: hidden; /* don't trigger hover */
 }
 
 #set.show-nav .pager {
 	opacity: 1;
 	transition-delay: 0s;
+	visibility: visible;
 }
 
 #set .pager .page {

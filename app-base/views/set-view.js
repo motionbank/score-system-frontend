@@ -46,9 +46,15 @@ module.exports = View.extend({
 
 		// UI hot zones  / show or hide UI
 		'mousemove' : function(e) {
+			// if mouse is over a cell with class 'prevent-ui' -> don't show nav (remove it)
 			var winWidth = this.$el.width(), hotWidth = winWidth * 0.06, $pager = this.$el.find('.pager');
 			if (e.pageX <  hotWidth || e.pageX > winWidth-hotWidth || e.pageY > $pager.offset().top) {
-				this.$el.addClass('show-nav');
+				// check if we are over a cell that doesn't want an ui overlay
+				if ( $('#set .cell.no-ui:hover').length > 0 ) {
+					this.$el.removeClass('show-nav');
+				} else {
+					this.$el.addClass('show-nav');
+				}
 			} else {
 				this.$el.removeClass('show-nav');
 			}
