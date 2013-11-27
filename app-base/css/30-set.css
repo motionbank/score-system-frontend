@@ -7,6 +7,11 @@
 	position: relative;
 }
 
+/* class .no-iframe-bgs hides all iframe backgrounds. fixes problems with performers flashing the poster image on scroll-in */
+#set.no-iframe-bgs .cell.type-iframe {
+	background-image: none !important;
+}
+
 /* in set navigation (next, prev arrows) */
 #set .pager-button {
 	position: absolute;
