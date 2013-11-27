@@ -58,6 +58,11 @@ module.exports = View.extend({
 			} else {
 				this.$el.removeClass('show-nav');
 			}
+		},
+
+		// hide UI when mouse moved out of window
+		'mouseleave' : function(e) {
+			this.$el.removeClass('show-nav');
 		}
 	},
 
