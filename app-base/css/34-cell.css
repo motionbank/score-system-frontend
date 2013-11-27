@@ -223,7 +223,7 @@
 @-webkit-keyframes fadeOut { from {opacity:1;} to {opacity:0;} }
 @keyframes fadeOut { from {opacity:1;} to {opacity:0;} }
 .cell .content { position:relative; } /* so .loading doesn't overlay it */
-
+.cell.no-loading-ani .loading { display: none !important; } /* prevent loading animation with class .no-loading-ani */
 
 
 /* show info command from the menu: show-info-requested. will be overridden by below classes */
