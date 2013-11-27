@@ -98,8 +98,9 @@
 	-webkit-box-sizing:content-box;
 	box-sizing:content-box;
 	border:50px solid transparent; 
-	border-top:none;
+	border-top: 32px solid transparent; /* extend up */
 	left:-50px;
+	top:0;
 }
 
 /* hide hidden elements */
