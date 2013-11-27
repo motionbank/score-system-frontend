@@ -59,6 +59,20 @@ module.exports = Chaplin.Application.extend({
 
 	initialize : function ( options ) {
 
+		this.subscribeEvent( '!app:get-set-for-id', 
+			function (setPathOrId, cbSucc, cbErr) {
+				if ( defaultSetsByUrl && setPathOrId in defaultSetsByUrl ) {
+					cbSucc( defaultSetsByUrl[setPathOrId] );
+				} else if ( defaultSetsById && setPathOrId in defaultSetsById ) {
+					cbSucc( defaultSetsById[setPathOrId] );
+				} 
+				// else {
+				// 	new ErrorView({ 
+				// 		message : 'Couldn\'t get the set you requested. (' + setPathOrId.replace(/[^-a-z0-9]/ig,'-') + ')' 
+				// 	});
+				// }
+		});
+
 		this.subscribeEvent( '!app:get-set-id-for-path',
 			function( setPathOrId, cbSucc, cbErr){
 				if ( defaultSetsByUrl && setPathOrId in defaultSetsByUrl ) {

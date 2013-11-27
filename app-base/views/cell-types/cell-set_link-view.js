@@ -32,6 +32,12 @@ module.exports = CellDefaultView.extend({
 	initialize : function() {
 		CellDefaultView.prototype.initialize.apply(this,arguments);
 		this.$el.css('cursor', 'pointer'); // add pointer cursor to the whole cell
+		
+		//auto replace id with path
+		var that = this;
+		this.publishEvent('!app:get-set-for-id', this.model.get('set-id'), function(set) {
+			if (set.path) that.model.set('set-id', set.path); // replace id with path
+		});
 	},
 
 	getTemplateData : function () {
@@ -40,7 +46,7 @@ module.exports = CellDefaultView.extend({
 		// current set id/path
 		var current_set_id = this.model.collection.set_id, current_set_path = this.model.collection.set_path;
 
-		// fill set id if not given
+		// fill set id if not given  
 		if ( !data['set-id'] || data['set-id'] == '0' ) {
 			data['set-id'] = current_set_path || current_set_id; // use id if path is empty
 		}
