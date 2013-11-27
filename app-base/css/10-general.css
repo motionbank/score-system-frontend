@@ -29,6 +29,7 @@ a, a:hover, a:active, a:link, a:visited {
 	width: 0px;
 	overflow: hidden;
 	visibility: hidden;
+	display: none; /* we need this after all. all the other stuff eventually gets overridden */
 }
 
 .left {
