@@ -48,7 +48,8 @@ module.exports = Controller.extend({
 
 						// set window title from config
 						if (config.title && config.title.title) {
-							document.title = this.model.get('title') + " - " + config.title.title + " - Motion Bank";
+							var title = this.model.get('title') + " - " + config.title.title + " - Motion Bank";
+							document.title = title.replace(/^\d+ *-* */, ''); // hide leading numbering
 						}
 
 						// show correct menu entry
