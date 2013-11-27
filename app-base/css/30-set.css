@@ -15,7 +15,11 @@
 	height:100%;
 	top:0;
 	cursor: pointer;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
 	transition: all 0.3s;
+	-webkit-transition-delay: 1.5s;
+	-moz-transition-delay: 1.5s;
 	transition-delay: 1.5s;
 	opacity: 0;
 	z-index: 999999;
@@ -31,6 +35,8 @@
 /*#set .pager-button:hover, #set.show-nav .pager-button {*/
 #set.show-nav .pager-button {
 	opacity:1;
+	-webkit-transition-delay: 0s;
+	-moz-transition-delay: 0s;
 	transition-delay: 0s;
 	visibility: visible;
 }
@@ -70,7 +76,11 @@
 	position: absolute;
 	bottom: 20px;
 	opacity: 0;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
 	transition: all 0.5s;
+	-webkit-transition-delay: 1.5s;
+	-moz-transition-delay: 1.5s;
 	transition-delay: 1.5s;
 	text-align: center;
 	z-index: 999999;
@@ -81,6 +91,8 @@
 
 #set.show-nav .pager {
 	opacity: 1;
+	-webkit-transition-delay: 0s;
+	-moz-transition-delay: 0s;
 	transition-delay: 0s;
 	visibility: visible;
 }
