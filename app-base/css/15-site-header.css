@@ -57,6 +57,10 @@
 	width: 100%;
 	height: 100%;
 	padding: 0.5em 1em;
+	padding-right: 40px;
+	overflow: hidden; /* cut text if too long */
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 /* hover over dropdown items */
