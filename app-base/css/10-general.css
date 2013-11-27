@@ -23,11 +23,12 @@ a, a:hover, a:active, a:link, a:visited {
 .element-hidden {
 	display: inline;
 	position: absolute;
-	left: -1000px;
-	top: -1000px;
+	left: -9999;
+	top: -9999px;
 	height: 0px;
 	width: 0px;
 	overflow: hidden;
+	visibility: hidden;
 }
 
 .left {
