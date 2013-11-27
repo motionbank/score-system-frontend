@@ -58,10 +58,9 @@ module.exports = BaseModel.extend({
 	},
 
 	getPosterImageURL : function () {
-		var url = 'http://' + config.assetHost + this.get('poster_image').url;
-		//console.log("POSTER", url);
-		return url;
-
+		var posterURL = this.get('poster_image').url;
+		if ( posterURL.indexOf('/assets/fallback/') == 0 ) return '';
+		return 'http://' + config.assetHost + this.get('poster_image').url;
 	},
 
 	getDimensions : function ()  {
