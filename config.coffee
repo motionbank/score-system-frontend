@@ -13,6 +13,10 @@ exports.config =
         'javascripts/app-base.js'   : /^app-base/
         'javascripts/app-extend.js' : /^app-extend/
         'javascripts/vendor.js'     : /^(?!app(-base|-extend))/
+      order:
+        after: [
+          'vendor/analytics.js'
+        ]
 
     stylesheets:
       joinTo:
