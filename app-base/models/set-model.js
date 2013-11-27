@@ -37,18 +37,18 @@ module.exports = BaseModel.extend({
 
   			var self = this;
 
-  			console.log('send event to get id from path: ' + set_id );
+  			// console.log('send event to get id from path: ' + set_id );
 
 			this.publishEvent('!app:get-set-id-for-path', set_id, function(sid) {
 
-				console.log("getting set:", set_id, sid);
+				console.log("loading set:", set_id, sid);
 
 	  			jQuery.ajax({
 	  				
 					url: 'http://' + config.apiHost + '/' + config.apiBaseUrl + '/sets/' + sid + '.json',
 					dataType:'json',
 					success: function (data) {
-						console.log("got set data", data);
+						// console.log("got set data", data);
 
 						// set model from received data
 						this.set(data);
