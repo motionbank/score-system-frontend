@@ -40,6 +40,24 @@ module.exports = View.extend({
 
 	initialize : function (opts) {
 		this.createSetMenu(opts.sets);
+
+		// arrow key navigation for switching sets (UP / DOWN)
+		var that = this;
+		$(document).off('keydown.menunav').on('keydown.menunav', function(e) {
+			var $menu = $('#main-menu');
+			if ( ! $menu.is(':visible') ) return;
+			var $cur = $menu.find('.set-link.current');
+			var $next;
+			if (e.keyCode == 38) {  // UP arrow key
+				// get previous menu item
+				$next = $cur.prevAll('.set-link:not(.hidden)').first();
+			} else if (e.keyCode == 40) { // DOWN arrow key
+				$next = $cur.nextAll('.set-link:not(.hidden)').first();
+			} else return;
+			if ($next.length > 0) {
+				document.location = $next.find('a').attr('href');
+			}
+		});
 	},
 
 	getTemplateData : function () {
