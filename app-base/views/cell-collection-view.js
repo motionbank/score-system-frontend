@@ -28,9 +28,7 @@ module.exports = BaseCollectionView.extend({
 		_(function(){
 			var self = this;
 			$(this.$el.parent()).scroll(function(){
-				var $el = $(this);
-				var val = $el.scrollLeft() / (self.$el.width()-$el.width());
-				self.publishEvent('set:scrolled',val);
+				self.publishEvent('set:scrolled');
 			});
 		}).bind(this).defer();
 		return this;

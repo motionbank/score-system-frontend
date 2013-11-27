@@ -6,13 +6,14 @@ module.exports = View.extend({
 	initialize : function () {
 		View.prototype.initialize.apply(this,arguments);
 
-		this.subscribeEvent('set:scrolled',function(val){
-			this.layoutAttributes.position = val;
+		this.subscribeEvent('set:scrolled',function(){
+			this.updatePosition();
 			this.updateCellVisibility();
 			this.updatePagingPosition();
 		});
 
 		this.subscribeEvent('window:resized',function(){
+			this.updatePosition();
 			this.updateCellGrid();
 			this.updateCellVisibility(); // prevent closed iframes that should be open (when sizing down, scrolling and sizing up again)
 			this.updatePagingSize();
@@ -95,6 +96,14 @@ module.exports = View.extend({
 		}).bind(this).defer();
 
 		return this;
+	},
+
+	updatePosition : function() {
+		var $el = $('#set .cell-collection-container');
+		var $win =  $('#set .cell-collection');
+		var pos = $el.scrollLeft() / ($win.width()-$el.width());
+		this.layoutAttributes.position = pos;
+		return pos;
 	},
 
 	// re-calculate layout attributes: set dimensions, grid dimensions (on resize)
@@ -180,7 +189,7 @@ module.exports = View.extend({
 					cellView.isVisible = true;
 				}
 			} else {
-				if ( cellView.isVisible ) {
+				if ( cellView.isVisible ) { 
 					cellView.deactivate();
 					cellView.isVisible = false;
 				}
