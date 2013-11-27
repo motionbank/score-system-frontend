@@ -32,6 +32,10 @@ module.exports = View.extend({
 			$li.removeClass('hide-info-link').addClass('show-info-link');
 			$('.cell-collection .cell').removeClass('show-info-requested');
 		}
+
+		// ,'click #main-menu .head-item' : function(evt) {
+		// 	$('#main-menu').toggleClass('open');
+		// }
 	},
 
 	initialize : function (opts) {
@@ -63,12 +67,12 @@ module.exports = View.extend({
 
 			if ( set.path == 'sets') {
 				this.overview_id = set.id;
-				return; // skip main set here. it's already in the template as 'OVERVIEW'
+				return; // skip overview set here. it's already in the template as 'OVERVIEW'
 			}
-			if ( set.path == 'info') {
-				this.info_id = set.id;
-				return; // skip main set here. it's already in the template as 'OVERVIEW'
-			}
+			// if ( set.path == 'info') {
+			// 	this.info_id = set.id;
+			// 	return; // skip main set here. it's already in the template as 'OVERVIEW'
+			// }
 			// list published sets only
 			this.setLinks.push({
 				title : set.title,

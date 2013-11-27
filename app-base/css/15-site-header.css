@@ -35,51 +35,78 @@
 	margin:0 auto;
 	letter-spacing: 0.05em;
 	left:116px;
-	display:none;
-	box-sizing:content-box;
 	z-index: 999999; /* really above everything else */
+	display: none;
 }
 
-/* add a 50px tolerance zone */
-#main-menu:hover {
-	border:50px solid transparent;
-	border-top:none;
+/* menu header item */
+#main-menu .head-item:before {
+	content:'⌵';
+	position: absolute;
+	right:1em;
 }
 
-#main-menu ul {
+/* background color */
+#main-menu .head-item, #main-menu .dropdown li {
 	background-color:rgba(59, 66, 65, 0.97);
 }
 
-#main-menu li {
-	padding: 0;
-	-webkit-transition: all 0.3s;
-}
-
-	/* make the link span the whole width */
-#main-menu li a {
+/* make the link span the whole width */
+#main-menu li a, #main-menu .head-item {
 	display: inline-block;
 	width: 100%;
 	height: 100%;
 	padding: 0.5em 1em;
 }
 
-#main-menu li:hover {
+/* hover over dropdown items */
+#main-menu .dropdown li:hover {
 	background-color: black;
+}
+
+/* closed menu */
+#main-menu .dropdown ul {
+	visibility: hidden;
+	opacity: 0;
+	transition: all 0.25s;
+	position: absolute;
+	width: 100%;
+}
+/*  open menu */
+#main-menu .dropdown:hover ul, #main-menu.open .dropdown ul {
+	visibility: visible;
+	opacity: 1;
+}
+
+/* line below head-item */
+#main-menu .head-item {
+	border-bottom: 1px solid rgba(255,255,255,0);
+	transition: all 0.25s;
+	cursor: default;
+}
+#main-menu .dropdown:hover .head-item, #main-menu.open .head-item {
+	border-bottom: 1px solid rgba(255,255,255,0.5);
+}
+
+/* add a 50px tolerance zone */
+#main-menu .dropdown ul {	
+	-moz-box-sizing:content-box;
+	-webkit-box-sizing:content-box;
+	box-sizing:content-box;
+	border:50px solid transparent; 
+	border-top:none;
+	left:-50px;
+}
+
+/* hide hidden elements */
+#main-menu li.hidden {
+	display: none;
 }
 
 /* current menu item */
 #main-menu li.current {
 	font-weight: bold;
-}
-
-#main-menu li.current a:after {
-	content:'⌵';
-	position: absolute;
-	right:1em;
-}
-
-#main-menu:hover li.current a:after {
-	display: none;
+	display: list-item;
 }
 
 /* special "system" links */
@@ -95,23 +122,6 @@
 /*  line below this entry */
 #main-menu li.line-below {
 	border-bottom: 1px solid rgba(255,255,255,0.5);
-}
-
-/* hide all menu items */
-#main-menu li {
-	display: none;
-	/*opacity: 0;*/
-}
-
-/* ...but show the current menu item */
-#main-menu li.current {
-	display: list-item;
-}
-
-/* on hover, show all menu items that are not hidden */
-#main-menu:hover li:not(.hidden) {
-	display: list-item;
-	opacity: 1;
 }
 
 /*  show/hide info link */
