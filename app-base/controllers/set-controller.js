@@ -52,9 +52,11 @@ module.exports = Controller.extend({
 						}
 
 						// show correct menu entry
+						$('#main-menu').fadeIn(300);
 						$('#main-menu li').removeClass('current');
-						$('#main-menu li[data-setid=' +  this.model.get("id") + ']').addClass('current');
-						$('#main-menu').fadeIn(500);
+						var $current = $('#main-menu li[data-setid=' +  this.model.get("id") + ']');
+						$current.addClass('current');
+						$('#main-menu .head-item').text($current.find('a').text());
 
 					}).bind(this).defer();
 				}, this);
