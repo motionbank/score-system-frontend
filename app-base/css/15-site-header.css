@@ -90,6 +90,8 @@
 
 /* add a 50px tolerance zone */
 #main-menu .dropdown ul {	
+	-moz-box-sizing:content-box;
+	-webkit-box-sizing:content-box;
 	box-sizing:content-box;
 	border:50px solid transparent; 
 	border-top:none;
