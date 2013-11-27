@@ -32,7 +32,7 @@
 	position: absolute;
 	width:320px;
 	top:12px;
-	letter-spacing: 0.05em;
+	letter-spacing: 0.15em;
 	z-index: 999999; /* really above everything else */
 	display: none;
 }
