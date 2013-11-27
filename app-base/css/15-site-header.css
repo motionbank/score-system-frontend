@@ -29,12 +29,10 @@
 }
 
 #main-menu {
-	position: relative;
+	position: absolute;
 	width:320px;
 	top:12px;
-	margin:0 auto;
 	letter-spacing: 0.05em;
-	left:116px;
 	z-index: 999999; /* really above everything else */
 	display: none;
 }
@@ -140,4 +138,37 @@
 
 #main-menu  li.hide-info-link a:after {
 	content: 'Hide Info';
+}
+
+
+/* responsive menu placement */
+@media only screen and (max-width : 320px) { 
+	#main-menu{
+		left:0;
+		right:auto;
+		margin-left: 0;
+	}
+}
+
+@media only screen and (max-width : 620px) { 
+	#logo {
+		display: none;
+	}
+	#main-menu{
+		right:50%;
+		margin-right: -160px;
+	}
+}
+
+@media only screen and (min-width: 621px) and (max-width : 1024px) { 
+	#main-menu {
+		right:20px;
+	}
+}
+
+@media only screen and (min-width : 1025px) { 
+	#main-menu {
+		right:50%;
+		margin-right: -160px;
+	}
 }
