@@ -15,6 +15,16 @@ module.exports = View.extend({
 		'footer'  : '#footer-container'
 	},
 	
-	template: template
+	template: template,
+
+	events: {
+		// little dirty hack to fix the logo link.
+		// would get something like http://scores.motionbank.org/jbmf/#http://scores.motionbank.org/ overwise
+		'click #logo a' : function(evt) {
+			// replace location, so no history is created for the link we don't want
+			window.location.replace(evt.currentTarget.href);
+			evt.preventDefault();
+		}
+	}
 
 });
