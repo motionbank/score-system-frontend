@@ -62,7 +62,7 @@ module.exports = CellMediaView.extend({
 				var iframe = $('iframe', that.$el)[0];
 				// check source window
 				if (iframe.contentWindow == request.source) {
-					console.log(that.cellInfo() + ' received: ', request.name );
+					//console.log(that.cellInfo() + ' received: ', request.name );
 					//console.log(iframe);
 					var onfinish = that.model.get('on-finish');
 					if (onfinish) {
@@ -73,21 +73,23 @@ module.exports = CellMediaView.extend({
 			},
 			nameAlias: 'event'
 		});
-		
-		var that = this;
-		$('iframe', this.$el).on('load', function() {
-			// load event is also fired on close, when src is set to "". skip this.
-			if (!this.src) {
-				// console.log("src not valid: " + this.src);
-				return;
-			}
-			// request finish events from player
-			pm.send({
-        		name: 'addEventListener', data: 'finish',
-        		receiver: this.contentWindow, receiverOrigin: 'http://player.vimeo.com',
-        		nameAlias: 'method', dataAlias: 'value'
-			});
 
+		pm.on({
+			matcher: 'ready',
+			callback: function ( request, response ) {
+				var iframe = $('iframe', that.$el)[0];
+				// check source window
+				if (iframe.contentWindow == request.source) {
+					//console.log(that.cellInfo() + ' received: ', request.name );
+					// request finish events from player
+					pm.send({
+		        		name: 'addEventListener', data: 'finish',
+		        		receiver: iframe.contentWindow, receiverOrigin: 'http://player.vimeo.com',
+		        		nameAlias: 'method', dataAlias: 'value'
+					});
+				}
+			},
+			nameAlias: 'event'
 		});
 	}
 
