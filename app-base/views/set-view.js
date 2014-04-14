@@ -1,5 +1,6 @@
 /* set-view.js */	
-var View 	 = require('views/base/view');
+var View 	 = require('views/base/view'),
+	pm 	= require('postmessenger');
 
 module.exports = View.extend({
 
@@ -18,6 +19,18 @@ module.exports = View.extend({
 			this.updateCellVisibility(); // prevent closed iframes that should be open (when sizing down, scrolling and sizing up again)
 			this.updatePagingSize();
 			this.updatePagingPosition();
+		});
+
+		// set memory
+		var memory = {};
+		pm.on('set>store', function(args) {
+			memory = _.extend(memory, args.data);
+			console.log("SET>STORE", memory);
+		});
+
+		pm.on('set>fetch', function(args) {
+			console.log("SET>FETCH", args.data.key, memory[args.data.key]);
+			pm.send('set>fetch-answer', { 'key' : args.data.key, 'value' : memory[args.data.key] || null }, args.source, args.origin);
 		});
 
 		// arrow key navigation
