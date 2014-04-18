@@ -20,9 +20,9 @@ module.exports = View.extend({
 	events: {
 		// little dirty hack to fix the logo link.
 		// would get something like http://scores.motionbank.org/jbmf/#http://scores.motionbank.org/ overwise
-		'click #logo a' : function(evt) {
+		'click #logo' : function(evt) {
 			// replace location, so no history is created for the link we don't want
-			window.location.replace(evt.currentTarget.href);
+			window.location.replace($(evt.currentTarget).data('href'));
 			evt.preventDefault();
 		}
 	}
