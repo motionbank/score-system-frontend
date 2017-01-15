@@ -3,6 +3,10 @@ Motion Bank score system frontend
 
 These files make up the front end of our "online score" system. Under development ... i don't think you want to use it right now.
 
+For further information please contact florian-at-motionbank-org.
+
+## Tech Information
+
 **Running this locally**
 
 The front end is a single page application based on [Chaplin.js](http://chaplinjs.org/) and [Backbone.js](http://backbone.js.org/). It requires a back end that serves the actual content through an API:
@@ -52,3 +56,13 @@ See:
 
 We are:
 - https://github.com/motionbank
+
+
+
+## Supporters
+
+Gefördert mit Mitteln der Kulturstiftung des Bundes, des Hessischen Ministeriums für Wissenschaft und Kunst, des Kulturfonds Frankfurt RheinMain und Frau Susanne Klatten.
+
+## License
+
+...
