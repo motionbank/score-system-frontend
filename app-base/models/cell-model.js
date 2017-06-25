@@ -60,6 +60,7 @@ module.exports = BaseModel.extend({
 	getPosterImageURL : function () {
 		var posterURL = this.get('poster_image').url;
 		if ( posterURL.indexOf('/assets/fallback/') == 0 ) return '';
+		if ( posterURL.indexOf('http') == 0 ) return posterURL;
 		return 'http://' + config.assetHost + this.get('poster_image').url;
 	},
 

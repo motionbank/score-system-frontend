@@ -3,4 +3,10 @@
 	height: 100%;
 }
 
-#logo { cursor:pointer; }
+#logo {
+	cursor:pointer;
+	color: white;
+	font-size: 1rem;
+	font-weight: bold;
+	padding-top: 0.5em;
+}
