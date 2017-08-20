@@ -1,4 +1,5 @@
 .DS_Store
+<<<<<<< HEAD
 thumbs.db
 public/*
 node_modules/*
@@ -20,3 +21,18 @@ off-*
 bower_components
 app-extend
 .idea
+=======
+node_modules/
+dist/
+npm-debug.log
+npm-debug.log.*
+selenium-debug.log
+test/unit/coverage
+test/e2e/reports
+cordova/platforms
+cordova/plugins
+thumbs.db
+!.gitkeep
+.idea
+.idea/*
+>>>>>>> master
