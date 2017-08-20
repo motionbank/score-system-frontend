@@ -1,27 +1,4 @@
 .DS_Store
-<<<<<<< HEAD
-thumbs.db
-public/*
-node_modules/*
-npm-debug.log
-*.bak
-webapp/config/config.js
-node_modules/*
-node_modules
-*-off/
-front-app/public/*
-config.js
-config/config.js
-config/config-local.js
-config-local.js
-config-*.js
-node_modules
-npm-shrinkwrap.json
-off-*
-bower_components
-app-extend
-.idea
-=======
 node_modules/
 dist/
 npm-debug.log
@@ -33,6 +10,4 @@ cordova/platforms
 cordova/plugins
 thumbs.db
 !.gitkeep
-.idea
-.idea/*
->>>>>>> master
+
