@@ -1,0 +1,45 @@
+.set.with-light-background-fixed,
+.set.with-dark-background-fixed {
+	background-position: 0 0;
+	background-size: auto 100%;
+	background-image: url( ../imgs/backgrounds/stage_tile_03.jpg );
+}
+
+.set.with-dark-background-fixed {
+	background-image: url( ../imgs/backgrounds/stage_tile_dark_02.jpg );
+}
+
+
+
+/* scrolling version of background classes puts the background on the scrolling element so background also scrolls */
+.set.with-light-background .cell-collection,
+.set.with-dark-background .cell-collection,
+.set.with-light-background .cell-collection-container,
+.set.with-dark-background .cell-collection-container {
+	background-position: 0 0;
+	background-size: auto 100%;
+	background-image: url( ../imgs/backgrounds/stage_tile_03.jpg );
+}
+
+.set.with-dark-background .cell-collection,
+.set.with-dark-background .cell-collection-container {
+	background-image: url( ../imgs/backgrounds/stage_tile_dark_02.jpg );
+}
+
+
+
+/* alternative dark background */
+.with-dark-background-alt-fixed {
+	background-image: url( ../imgs/backgrounds/stage_tile_dark_01.jpg );
+	background-repeat: x;
+	background-position: 0 0;
+	background-size: auto 100%;
+}
+
+.with-dark-background-alt .cell-collection,
+.with-dark-background-alt .cell-collection-container {
+	background-image: url( ../imgs/backgrounds/stage_tile_dark_01.jpg );
+	background-repeat: x;
+	background-position: 0 0;
+	background-size: auto 100%;
+}
