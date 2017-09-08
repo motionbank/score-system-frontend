@@ -18,5 +18,4 @@ node_modules
 npm-shrinkwrap.json
 off-*
 bower_components
-app-extend
 .idea
