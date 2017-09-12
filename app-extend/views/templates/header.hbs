@@ -2,14 +2,16 @@
     <ul>
         <li class="dropdown"><div class="head-item">&nbsp;</div>
             <ul>
+                <li class="special"><a href="#">SANDBOX!</a></li>
                 <li class="special set-link" data-setid="{{overview_id}}"><a href="#/set/sets">Overview</a></li>
                 {{#each setLinks}}
                 <li class="set-link{{#if this.hidden}} hidden{{/if}}" data-setid="{{this.id}}"><a href="{{this.url}}">{{this.title}}</a></li>
                 {{/each}}
+                <li class="line-above"><a href="../pina_bausch/#/set/sets" target="_blank">Switch to non-SANDBOX</a></li>
                 {{!<li class="special line-above show-info-link"><a href="#"></a></li>}}
                 {{!<li class="special line-above"><a href="http://www.janmartens.com/the-common-people-2016.html" target="_blank">About Common People</a></li>}}
                 {{!<li class="special line-above"><a href="http://dopodo.eu/" target="_blank">About Dance On, Pass On, Dream On</a></li>}}
-                <li class="special"><a href="http://motionbank.org/" target="_blank">About Motion Bank</a></li>
+                <li class="line-above"><a href="http://motionbank.org/" target="_blank">About Motion Bank</a></li>
             </ul>
         </li>
     </ul>
