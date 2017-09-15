@@ -12,6 +12,7 @@
     "node": "~0.6.10 || 0.8 || 0.9"
   },
   "scripts": {
+    "build": "brunch build",
     "start": "brunch watch --server",
     "test": "mocha-phantomjs public/test/index.html"
   },
