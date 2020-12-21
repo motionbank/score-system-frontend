@@ -8,9 +8,9 @@
     "lodash" : "~2.3.0",
     "jquery" : "~2.0.2",
     "normalize-css" : "~2.1.2",
-    "h5bp-helpers" : "~0.1.0",
+    "h5bp-helpers" : "git://github.com/motionbank/h5bp-helpers.git",
     "piecemaker-api-client" : "git://github.com/motionbank/piecemaker-api-client.git",
-    "postmessenger" : "git://github.com/fjenett/postmessenger-js.git",
+    "postmessenger" : "git://github.com/motionbank/postmessenger-js.git",
     "handlebars" : "1.0.0"
   },
   "overrides" : {
