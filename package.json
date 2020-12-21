@@ -16,16 +16,14 @@
     "test": "mocha-phantomjs public/test/index.html"
   },
   "dependencies": {
-    "javascript-brunch": ">= 1.0 < 1.6",
+    "brunch": "^2.10.17",
+    "clean-css-brunch": ">= 1.0 < 1.6",
     "coffee-script-brunch": ">= 1.0 < 1.6",
-
     "css-brunch": ">= 1.0 < 1.6",
-    "stylus-brunch": ">= 1.0 < 1.6",
-
     "handlebars-brunch": ">= 1.0 < 1.6",
-
-    "uglify-js-brunch": ">= 1.0 < 1.6",
-    "clean-css-brunch": ">= 1.0 < 1.6"
+    "javascript-brunch": ">= 1.0 < 1.6",
+    "stylus-brunch": ">= 1.0 < 1.6",
+    "uglify-js-brunch": ">= 1.0 < 1.6"
   },
   "devDependencies": {
     "chai": "1.2.0",
